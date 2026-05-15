@@ -1,0 +1,116 @@
+{
+  "application_id": "broadriver",
+  "application_name": "BroadRiver",
+  "base_url": "http://localhost:4000/",
+  "operations": {
+    "create_user": {
+      "phrases": [
+        "create user",
+        "onboard user",
+        "add user"
+      ],
+      "required_fields": [
+        {
+          "field_name": "user_name",
+          "display_name": "User Name",
+          "type": "string"
+        },
+        {
+          "field_name": "employee_id",
+          "display_name": "Employee ID",
+          "type": "string"
+        },
+        {
+          "field_name": "email",
+          "display_name": "Email",
+          "type": "email"
+        },
+        {
+          "field_name": "department",
+          "display_name": "Department",
+          "type": "string"
+        },
+        {
+          "field_name": "region",
+          "display_name": "Region",
+          "type": "string"
+        },
+        {
+          "field_name": "user_type",
+          "display_name": "User Type",
+          "type": "string"
+        },
+        {
+          "field_name": "requested_group",
+          "display_name": "Requested Group",
+          "type": "entitlement"
+        },
+        {
+          "field_name": "manager_email",
+          "display_name": "Manager Email",
+          "type": "email"
+        },
+        {
+          "field_name": "duration",
+          "display_name": "Duration",
+          "type": "string"
+        }
+      ]
+    },
+    "modify_user": {
+      "phrases": [
+        "modify user",
+        "update user"
+      ],
+      "required_fields": [
+        {
+          "field_name": "email",
+          "display_name": "Email",
+          "type": "email"
+        },
+        {
+          "field_name": "requested_group",
+          "display_name": "Requested Group",
+          "type": "entitlement"
+        }
+      ]
+    },
+    "delete_user": {
+      "phrases": [
+        "delete user",
+        "remove user",
+        "disable user"
+      ],
+      "required_fields": [
+        {
+          "field_name": "email",
+          "display_name": "Email",
+          "type": "email"
+        }
+      ]
+    }
+  },
+  "entitlements": [
+    {
+      "name": "AP_APPROVER",
+      "ui_value": "AP_APPROVER",
+      "risk_level": "High",
+      "requires_manager_approval": true,
+      "requires_app_owner_approval": true
+    },
+    {
+      "name": "AP_VIEWER",
+      "ui_value": "AP_VIEWER",
+      "risk_level": "Low",
+      "requires_manager_approval": true,
+      "requires_app_owner_approval": false
+    },
+    {
+      "name": "FINANCE_ADMIN",
+      "ui_value": "Finance Administrator",
+      "risk_level": "Critical",
+      "requires_manager_approval": true,
+      "requires_app_owner_approval": true
+    }
+  ]
+}

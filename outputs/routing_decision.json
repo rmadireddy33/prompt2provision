@@ -1,0 +1,8 @@
+{
+  "decision": "BUILD_WORKFLOW",
+  "message": "Approved reusable workflow not found",
+  "application_id": "broadriver",
+  "application_name": "BroadRiver",
+  "operation": "delete_user",
+  "workflow_key": "broadriver.delete_user"
+}

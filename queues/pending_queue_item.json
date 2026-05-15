@@ -1,0 +1,15 @@
+{
+  "status": "READY_FOR_ROUTING",
+  "application_id": "broadriver",
+  "application_name": "BroadRiver",
+  "operation": "delete_user",
+  "workflow_key": "broadriver.delete_user",
+  "base_url": "http://localhost:4000/",
+  "fields": {
+    "email": "noah.wilson@broadriver.com"
+  },
+  "validation": {
+    "status": "PASSED",
+    "missing_information": []
+  }
+}

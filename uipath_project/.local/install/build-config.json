@@ -1,0 +1,8 @@
+{
+  "Version": "1.0",
+  "IncludeWorkflows": [
+    "Main.xaml",
+    "workflows\\apps\\broadriver\\CreateUser.xaml",
+    "workflows\\apps\\broadriver\\DeleteUser.xaml"
+  ]
+}

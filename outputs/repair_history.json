@@ -1,0 +1,42 @@
+[
+    {
+        "attempt":  1,
+        "package_version":  "1.0.18",
+        "job_key":  "eb405a4c-4f4e-4b8c-9f66-2d8982ffc083",
+        "failed_step":  "Click Admin",
+        "failure":  "NodeNotFoundException",
+        "repair":  "Added explicit BroadRiver* scope selector and WaitForReady=Interactive to strict BroadRiver targets; advanced project/package to 1.0.19."
+    },
+    {
+        "attempt":  2,
+        "package_version":  "1.0.19",
+        "job_key":  "485c1fb3-6b33-4fc9-91d3-f32a5dce52c9",
+        "failed_step":  "Enter User Type",
+        "failure":  "NodeNotFoundException",
+        "repair":  "Removed user_type and duration UI actions because they are not part of the BroadRiver create_user UI-map steps; advanced project/package to 1.0.20."
+    },
+    {
+        "attempt":  3,
+        "package_version":  "1.0.20",
+        "job_key":  "04513dfd-cec9-4c5f-a663-f694122b19a8",
+        "failed_step":  "Get Success Toast Text",
+        "failure":  "Success toast not found after submit",
+        "repair":  "Changed group autocomplete handling from Enter key confirmation to a strict dynamic click on the requested group suggestion; advanced project/package to 1.0.21."
+    },
+    {
+        "attempt":  4,
+        "package_version":  "1.0.21",
+        "job_key":  "d4457b4b-4f37-4c08-99a1-78913c2e6a02",
+        "failed_step":  "Click Requested Group Suggestion",
+        "failure":  "NodeNotFoundException",
+        "repair":  "Reverted autocomplete confirmation to Enter key and changed success validation target to the required success message text; advanced project/package to 1.0.22."
+    },
+    {
+        "attempt":  5,
+        "package_version":  "1.0.22",
+        "job_key":  "f5a62d57-224e-45c5-985c-bb49acd12ceb",
+        "failed_step":  "Get Success Toast Text",
+        "failure":  "Success-message selector not found",
+        "repair":  "Changed success verification to read BODY text and assert it contains User created successfully; advanced project/package to 1.0.23."
+    }
+]

@@ -1,0 +1,84 @@
+Build, deploy, test, and repair the BroadRiver delete-user UiPath workflow artifact.
+
+Source files:
+- queues/pending_queue_item.json
+- app_profiles/broadriver.json
+- app_profiles/broadriver_ui_map.json
+
+Workflow key:
+broadriver.delete_user
+
+Application ID:
+broadriver
+
+Operation:
+delete_user
+
+Output workflow:
+uipath_project/workflows/apps/broadriver/DeleteUser.xaml
+
+Requirements:
+1. Read the BroadRiver UI map and use the delete_user operation only.
+2. Build a reusable UiPath XAML workflow using Modern UIAutomation activities.
+3. Scope all UI activities inside Use Application/Browser.
+4. Open the application from in_BaseUrl; do not hardcode URLs.
+5. Resolve runtime field values from explicit arguments when provided, otherwise from in_Fields.
+6. Do not hardcode request-specific queue values.
+7. Use strict BroadRiver selectors from the application source.
+8. Workflow steps:
+   - Open BroadRiver application using base_url
+   - Click Admin
+   - Click Delete User
+   - Type Into User Email
+   - Click Search
+   - Click Delete
+   - Confirm delete
+   - Verify success message
+9. Validate success when the result contains:
+   - User deleted successfully
+10. Add meaningful logs before major UI actions.
+11. Keep the workflow reusable for future queue transactions.
+12. Update README.md, test_data.json, and workflow_arguments.json to show delete_user is implemented.
+
+Queue data and asset handling:
+13. The generated queue transaction JSON should be copied to a local external path outside the UiPath project folder.
+14. Add support for reading that external queue JSON path from a UiPath Orchestrator Asset.
+15. Use an asset name such as Prompt2Provision_QueueDataPath.
+16. Main.xaml should read the asset value, then read the queue JSON from that local path.
+17. Do not hardcode the queue file path inside Main.xaml.
+
+Deployment requirements:
+18. After generating the workflow, prepare the UiPath project for deployment, project.json location is inside uipath_project/project.json.
+19. Before packaging or deploying, query Orchestrator for the current `Prompt2ProvisionUiPath` version by checking the `Development` process version and the tenant feed with `uip or packages list --search Prompt2ProvisionUiPath --all-fields --output json`.
+20. Set uipath_project/project.json `projectVersion` and the package version to the next patch version after the highest current Orchestrator version. Do not reuse a local version that already exists in Orchestrator.
+21. Package the UiPath project.
+22. Upload the package to Orchestrator tenant feed with `uip or packages upload <nupkg> --output json`.
+23. Create/update the process only in the `Development` Orchestrator folder. Resolve the folder dynamically by name/path; do not hardcode folder IDs or GUIDs.
+24. Use the stable process name `Prompt2ProvisionUiPath` and package key `Prompt2ProvisionUiPath` when a new process binding is needed. If `Development` already contains a process, update that process/package binding dynamically. Do not create operation-specific process names such as `BroadRiver_delete_user` and do not deploy to any personal workspace folder.
+25. Ensure the process can be launched from UiPath Assistant.
+26. Document deployment steps in README.md.
+
+Test execution requirements:
+27. After deployment, run the deployed process from the `Development` Orchestrator folder or UiPath Assistant where possible.
+28. Capture execution result, logs, and any failure details.
+29. Save test execution output under outputs/execution_test_result.json.
+
+Autonomous repair loop:
+30. If execution fails due to selector, UI element, timeout, or synchronization issues:
+   - identify failed step
+   - inspect workflow and selector
+   - update selector or synchronization logic
+   - add Check App State / Wait for Element Appear where needed
+   - check the current Orchestrator version again, then rebuild / repackage with the next patch version
+   - redeploy
+   - rerun the test
+31. Repeat repair loop until success or until max repair attempts is reached.
+32. Save repair history under outputs/repair_history.json.
+
+Important:
+- Do not create placeholder-only workflows.
+- Do not Hardcode queue item specific values inside workflow for validations
+- Do not only explain.
+- Actually create or update the files.
+- If selector refinement is needed, add TODO comments, but still create real UiPath UIAutomation activity structure.
+- Generated workflows must be reusable, deployable, and testable.

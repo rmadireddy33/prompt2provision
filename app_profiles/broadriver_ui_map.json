@@ -1,0 +1,47 @@
+{
+  "application_id": "broadriver",
+  "operations": {
+    "create_user": {
+      "workflow_name": "CreateUser.xaml",
+      "steps": [
+        "Open BroadRiver application using base_url",
+        "Click Admin",
+        "Click Create Users",
+        "Enter user name",
+        "Enter email address",
+        "Select group from suggestion dropdown",
+        "Enter manager email",
+        "Click Submit",
+        "Verify success message"
+      ],
+      "success_validation": "User created successfully"
+    },
+    "modify_user": {
+      "workflow_name": "ModifyUser.xaml",
+      "steps": [
+        "Open BroadRiver application using base_url",
+        "Click Admin",
+        "Click Modify User",
+        "Search user by email",
+        "Update requested group",
+        "Click Save",
+        "Verify success message"
+      ],
+      "success_validation": "User modified successfully"
+    },
+    "delete_user": {
+      "workflow_name": "DeleteUser.xaml",
+      "steps": [
+        "Open BroadRiver application using base_url",
+        "Click Admin",
+        "Click Delete User",
+        "Type Into User Email",
+		"Click Search",
+        "Click Delete",
+        "Confirm delete",
+        "Verify success message"
+      ],
+      "success_validation": "User deleted successfully"
+    }
+  }
+}

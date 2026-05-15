@@ -1,0 +1,105 @@
+- None [ref=e2]:
+  - Container [ref=e4]:
+    - Container [ref=e5]:
+      - Container [ref=e7]:
+        - Container [ref=e8]: BroadRiver navigation
+          - Container [ref=e10]:
+            - Container "BR" [ref=e12]
+            - Container [ref=e13]:
+              - Text "BroadRiver" [ref=e14]
+              - Container "Admin Portal" [ref=e15]
+          - Container [ref=e11]:
+            - Button "Dashboard" [ref=e16]:
+              - Image [ref=e23]:
+                - None [ref=e25]
+                - None [ref=e26]
+                - None [ref=e27]
+                - None [ref=e28]
+              - Container "Dashboard" [ref=e24]
+            - Button "Admin" [ref=e17]:
+              - Image [ref=e29]:
+                - Image [ref=e31]
+                - Image [ref=e32]
+              - Container "Admin" [ref=e30]
+            - Button "List Users" [ref=e18]:
+              - Image [ref=e33]:
+                - Image [ref=e35]
+                - Image [ref=e36]
+                - Image [ref=e37]
+                - Image [ref=e38]
+              - Container "List Users" [ref=e34]
+            - Button "List Groups" [ref=e19]:
+              - Image [ref=e39]:
+                - Image [ref=e41]
+                - Image [ref=e42]
+                - Image [ref=e43]
+                - Image [ref=e44]
+                - Image [ref=e45]
+                - Image [ref=e46]
+                - Image [ref=e47]
+              - Container "List Groups" [ref=e40]
+            - Button "Create User" [ref=e20]:
+              - Image [ref=e48]:
+                - Image [ref=e50]
+                - Image [ref=e51]
+                - None [ref=e52]
+                - None [ref=e53]
+              - Container "Create User" [ref=e49]
+            - Button "Modify User" [ref=e21]:
+              - Image [ref=e54]:
+                - Image [ref=e56]
+                - Image [ref=e57]
+              - Container "Modify User" [ref=e55]
+            - Button "Delete User" [ref=e22]:
+              - Image [ref=e58]:
+                - Image [ref=e60]
+                - Image [ref=e61]
+                - Image [ref=e62]
+                - None [ref=e63]
+                - None [ref=e64]
+              - Container "Delete User" [ref=e59]
+        - Container [ref=e9]:
+          - Container [ref=e65]:
+            - Container [ref=e67]:
+              - Text [ref=e69]: BroadRiver Admin Portal
+              - Text "Create User" [ref=e70]
+            - Container [ref=e68]: Disconnected Excel Mode
+              - Container [ref=e71]
+          - Container [ref=e66]:
+            - Container [ref=e72]:
+              - Container [ref=e73]:
+                - Text "Create User" [ref=e75]
+                - Container [ref=e76]: Excel-backed user provisioning
+              - Container [ref=e74]:
+                - Text "User Name" [ref=e77]:
+                  - InputBox [ref=e88]
+                - Text "Employee ID" [ref=e78]:
+                  - InputBox [ref=e89]
+                - Text "Email Address" [ref=e79]:
+                  - InputBox [ref=e90]
+                - Text "Department" [ref=e80]:
+                  - InputBox [ref=e91]
+                - Text "Region" [ref=e81]:
+                  - InputBox [ref=e93]
+                - Text "User Type" [ref=e82]:
+                  - DropDown [ref=e94]: Select user type
+                    - Option "Select user type" [selected]
+                    - Option "Employee"
+                    - Option "Contractor"
+                    - Option "Vendor"
+                    - Option "Service Account"
+                - Text "Requested Group" [ref=e83]:
+                  - InputBox [ref=e100]
+                - Text "Duration" [ref=e84]:
+                  - InputBox [ref=e102]:
+                    - /placeholder: 90 days
+                - Text "Manager Approval" [ref=e85]:
+                  - DropDown [ref=e103]: Select approval
+                    - Option "Select approval" [selected]
+                    - Option "Yes"
+                    - Option "No"
+                    - Option "Pending"
+                - Text "Manager Email" [ref=e86]:
+                  - InputBox [ref=e108]
+                - Container [ref=e87]:
+                  - Button "Create User" [ref=e109]

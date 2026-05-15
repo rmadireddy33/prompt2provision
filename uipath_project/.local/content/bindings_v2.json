@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "resources": [
+    {
+      "activityDisplayName": "Get Asset",
+      "activityId": "GetRobotAsset_1",
+      "resource": "asset",
+      "key": "Prompt2Provision_QueueDataPath",
+      "id": "assetPrompt2Provision_QueueDataPathPrompt2Provision_QueueDataPathFalse",
+      "value": {
+        "name": {
+          "defaultValue": "Prompt2Provision_QueueDataPath",
+          "isExpression": false
+        }
+      },
+      "metadata": {
+        "BindingsVersion": "2.2"
+      }
+    }
+  ]
+}

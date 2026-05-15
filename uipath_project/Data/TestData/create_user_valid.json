@@ -1,0 +1,19 @@
+{
+  "user": {
+    "user_name": "Sample User",
+    "employee_id": "E00001",
+    "email": "sample.user@example.local",
+    "department": "Sample Department",
+    "region": "Sample Region",
+    "user_type": "Sample Type"
+  },
+  "access": {
+    "requested_group": "SAMPLE_GROUP",
+    "ui_value_to_select": "Sample Group",
+    "risk_level": "Sample Risk",
+    "requires_manager_approval": true,
+    "requires_app_owner_approval": true
+  },
+  "duration": "Sample Duration",
+  "expected_result": "User is created and assigned to the requested group."
+}

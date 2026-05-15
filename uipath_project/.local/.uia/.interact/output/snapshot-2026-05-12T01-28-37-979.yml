@@ -1,0 +1,89 @@
+- Window [ref=w10]:
+  - /process: explorer.exe
+  - /class: Shell_TrayWnd
+- Window "Windows PowerShell" [ref=w68]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "BroadRiver Admin Portal - Google Chrome" [ref=w69]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "ChatGPT" [ref=b1269]:
+    - /url: https://chatgpt.com/
+  - BrowserTab "Inbox (1,705) - ravindra.reddy33@gmail.com - Gmail" [ref=b1270]:
+    - /url: https://mail.google.com/mail/u/0/#inbox
+  - BrowserTab "Jobs - UiPath Orchestrator" [ref=b1271]:
+    - /url: https://cloud.uipath.com/rmadireddy33/rmadireddy33/orchestrator_/jobs(sidepanel:sidepanel/jobs/414fba74-3034-425d-bf88-d3b6112a6240/logs)?tid=47187&fid=519923&index=0&size=25&state=M4ewTgLgPgZglgUwDYBMoGMwIIYTiAOwBU4BbBKFOLdPQyhYdAPVYBIAGKNgRigCYoAZigAWALrigA%3D%3D
+  - BrowserTab "UiPath Challenge Strategy" [ref=b1272]:
+    - /url: https://chatgpt.com/c/69fd5ed9-071c-83ea-bf93-b5e4fe843a51
+  - BrowserTab "(1) Approve or reject human tasks/escalations from Outlook, Slack etc. - General Availability - Agentic Automation - UiPath Community Forum" [ref=b1273]:
+    - /url: https://forum.uipath.com/t/approve-or-reject-human-tasks-escalations-from-outlook-slack-etc-general-availability/5708430
+  - BrowserTab "(1) Latest topics - UiPath Community Forum" [ref=b1274]:
+    - /url: https://forum.uipath.com/latest
+  - BrowserTab "Low Fares Done Right | Frontier Airlines" [ref=b1275]:
+    - /url: https://www.flyfrontier.com/
+  - BrowserTab "Low Fares Done Right | Frontier Airlines" [ref=b1276]:
+    - /url: https://www.flyfrontier.com/
+  - BrowserTab "Low Fares Done Right | Frontier Airlines" [ref=b1277]:
+    - /url: https://www.flyfrontier.com/
+  - BrowserTab "Google Calendar - Event details" [ref=b1278]:
+    - /url: https://calendar.google.com/calendar/u/0/r/eventedit/MWlqMm0zcjZ2NnI5cW5sdmk3OGM2YjNrMjBfMjAyNjA1MTJUMDIzMDAwWiByYXZpbmRyYS5yZWRkeTMzQG0
+  - BrowserTab "BroadRiver Admin Portal" [ref=b1279] [selected]:
+    - /url: https://broadriver-demo.onrender.com/
+- Window [ref=w77]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;2ab49db3-7f43-4fcd-8415-fae910e9fe25]
+- Window "C:\Users\ravin\OneDrive\Documents\UiPathCodedAgentChallenge\Prompt2Provision\approvals\approval_status.json - Notepad++" [ref=w89]:
+  - /process: notepad++.exe
+  - /class: Notepad++
+- Window "broadriver - File Explorer" [ref=w92]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "jml_request.txt - Notepad" [ref=w96]:
+  - /process: notepad.exe
+  - /class: Notepad
+- Window "UiPath Assistant" [ref=w97]:
+  - /process: uipath.assistant.exe
+  - /class: Chrome_WidgetWin_1
+- Window "packages - File Explorer" [ref=w100] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "This PC - File Explorer" [ref=w104]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "Windows-SSD (C:) - File Explorer" [ref=w106]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "Inbox (319) - madireddy.ravindrareddy@gmail.com - Gmail - Google Chrome" [ref=w109] [incognito]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+- Window "Desktop - File Explorer" [ref=w113] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "Zoom Workplace" [ref=w132] [minimized]:
+  - /process: zoom.exe
+  - /class: ZPPTMainFrmWndClassEx
+- Window "_logs - File Explorer" [ref=w135] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window [ref=w247]:
+  - /process: explorer.exe
+  - /class: Shell_SecondaryTrayWnd
+- Window "Documents - File Explorer" [ref=w270] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "BlankProcess - File Explorer" [ref=w283] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window [ref=w389] [minimized]:
+  - /process: intuitdataprotect.exe
+  - /class: WindowsForms10.Window.8.app.0.34f5582_r7_ad1
+- Window "McAfee Security Scan Plus" [ref=w398] [minimized]:
+  - /class: MSSP
+- Window "New tab - Personal - Microsoft​ Edge" [ref=w399] [minimized]:
+  - /process: msedge.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "New tab" [ref=b1280] [selected] [internal page]:
+    - /url: edge://newtab/
+- Window "Program Manager" [ref=w401]:
+  - /process: explorer.exe
+  - /class: Progman

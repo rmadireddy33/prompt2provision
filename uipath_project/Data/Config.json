@@ -1,0 +1,47 @@
+{
+  "application": {
+    "id": "broadriver",
+    "name": "BroadRiver",
+    "operation": "create_user",
+    "workflowTemplate": "standard_web_admin_portal",
+    "portalUrl": "http://127.0.0.1:5173/"
+  },
+  "logging": {
+    "eventPrefix": "BR",
+    "level": "Info",
+    "includeEmployeeId": true,
+    "maskFields": [
+      "password",
+      "token"
+    ]
+  },
+  "entitlements": {
+    "SAMPLE_GROUP": {
+      "uiValue": "Sample Group",
+      "riskLevel": "Sample Risk",
+      "requiresManagerApproval": true,
+      "requiresAppOwnerApproval": true
+    }
+  },
+  "selectorsToCapture": [
+    "Browser/Application",
+    "Login.Username",
+    "Login.Password",
+    "Login.SignIn",
+    "Navigation.UserAdministration",
+    "CreateUser.NewUser",
+    "CreateUser.UserName",
+    "CreateUser.EmployeeId",
+    "CreateUser.Email",
+    "CreateUser.Department",
+    "CreateUser.Region",
+    "CreateUser.UserType",
+    "CreateUser.Duration",
+    "CreateUser.Save",
+    "Groups.SearchUser",
+    "Groups.AccessTab",
+    "Groups.GroupDropdown",
+    "Groups.Save",
+    "Groups.AssignmentConfirmation"
+  ]
+}

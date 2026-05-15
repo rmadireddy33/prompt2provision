@@ -1,0 +1,295 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="workflows_apps_broadriver_DeleteUser" VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="DeleteUser_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_BaseUrl" Type="InArgument(x:String)" />
+    <x:Property Name="in_Fields" Type="InArgument(njl:JObject)" />
+    <x:Property Name="in_EntitlementDetails" Type="InArgument(njl:JObject)" />
+    <x:Property Name="in_Email" Type="InArgument(x:String)" />
+  </x:Members>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.UIAutomationNext</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="BroadRiver Delete User" sap:VirtualizedContainerService.HintSize="1281,2600" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="userEmail" />
+      <Variable x:TypeArguments="x:String" Name="resultText" />
+      <Variable x:TypeArguments="x:Boolean" Name="elementFound" />
+    </Sequence.Variables>
+    <ui:LogMessage DisplayName="Log Resolve Values" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Resolving BroadRiver delete_user values&quot;]" />
+    <Assign DisplayName="Resolve User Email" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[userEmail]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[If(Not String.IsNullOrWhiteSpace(in_Email), in_Email, If(in_Fields IsNot Nothing AndAlso in_Fields("email") IsNot Nothing, in_Fields("email").ToString, ""))]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <If Condition="[String.IsNullOrWhiteSpace(in_BaseUrl)]" DisplayName="Validate BaseUrl" sap:VirtualizedContainerService.HintSize="450,179" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Sequence DisplayName="Missing BaseUrl" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Throw DisplayName="Throw Missing BaseUrl" Exception="[New BusinessRuleException(&quot;BroadRiver delete_user requires in_BaseUrl.&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_1" />
+        </Sequence>
+      </If.Then>
+    </If>
+    <If Condition="[String.IsNullOrWhiteSpace(userEmail)]" DisplayName="Validate Email" sap:VirtualizedContainerService.HintSize="450,179" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <Sequence DisplayName="Missing Email" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Throw DisplayName="Throw Missing Email" Exception="[New BusinessRuleException(&quot;BroadRiver delete_user requires an email from in_Email or in_Fields.email.&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
+        </Sequence>
+      </If.Then>
+    </If>
+    <ui:LogMessage DisplayName="Log Open BroadRiver" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Opening BroadRiver application from in_BaseUrl&quot;]" />
+    <uix:NApplicationCard AttachMode="ByInstance" CloseMode="Never" DisplayName="Use Application Browser BroadRiver" HealingAgentBehavior="Job" OpenMode="Always" ScopeGuid="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" Version="V2" sap:VirtualizedContainerService.HintSize="980,1900" sap2010:WorkflowViewState.IdRef="NApplicationCard_1">
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Version="V2">
+          <uix:TargetApp.Selector>
+            <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+          </uix:TargetApp.Selector>
+          <uix:TargetApp.Url>
+            <InArgument x:TypeArguments="x:String">[in_BaseUrl]</InArgument>
+          </uix:TargetApp.Url>
+        </uix:TargetApp>
+      </uix:NApplicationCard.TargetApp>
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="940,1700" sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <ui:LogMessage DisplayName="Log Click Admin" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Clicking Admin navigation&quot;]" />
+            <uix:NCheckState CheckVisibility="True" DisplayName="Wait for Admin" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,360" sap2010:WorkflowViewState.IdRef="NCheckState_1" Timeout="30" Version="V5">
+              <uix:NCheckState.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='nav-admin' tag='BUTTON' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NCheckState.Target>
+              <uix:NCheckState.Exists>
+                <OutArgument x:TypeArguments="x:Boolean">[elementFound]</OutArgument>
+              </uix:NCheckState.Exists>
+            </uix:NCheckState>
+            <If Condition="[Not elementFound]" DisplayName="Validate Admin Visible" sap:VirtualizedContainerService.HintSize="450,179" sap2010:WorkflowViewState.IdRef="If_4">
+              <If.Then>
+                <Sequence DisplayName="Admin Missing" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                  <Throw DisplayName="Throw Admin Missing" Exception="[New UiPath.Core.ElementOperationException(&quot;BroadRiver Admin navigation button did not appear.&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_3" />
+                </Sequence>
+              </If.Then>
+            </If>
+            <uix:NClick ClickType="Single" DisplayName="Click Admin" MouseButton="Left" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,260" sap2010:WorkflowViewState.IdRef="NClick_1" Timeout="30" Version="V5">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='nav-admin' tag='BUTTON' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NClick.Target>
+            </uix:NClick>
+            <ui:LogMessage DisplayName="Log Click Delete User" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Clicking Delete User&quot;]" />
+            <uix:NCheckState CheckVisibility="True" DisplayName="Wait for Delete User Menu" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,360" sap2010:WorkflowViewState.IdRef="NCheckState_2" Timeout="30" Version="V5">
+              <uix:NCheckState.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='nav-delete-user' tag='BUTTON' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NCheckState.Target>
+              <uix:NCheckState.Exists>
+                <OutArgument x:TypeArguments="x:Boolean">[elementFound]</OutArgument>
+              </uix:NCheckState.Exists>
+            </uix:NCheckState>
+            <If Condition="[Not elementFound]" DisplayName="Validate Delete User Menu Visible" sap:VirtualizedContainerService.HintSize="450,179" sap2010:WorkflowViewState.IdRef="If_5">
+              <If.Then>
+                <Sequence DisplayName="Delete User Menu Missing" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                  <Throw DisplayName="Throw Delete User Menu Missing" Exception="[New UiPath.Core.ElementOperationException(&quot;BroadRiver Delete User menu button did not appear.&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_4" />
+                </Sequence>
+              </If.Then>
+            </If>
+            <uix:NClick ClickType="Single" DisplayName="Click Delete User" MouseButton="Left" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,260" sap2010:WorkflowViewState.IdRef="NClick_2" Timeout="30" Version="V5">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='nav-delete-user' tag='BUTTON' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NClick.Target>
+            </uix:NClick>
+            <ui:LogMessage DisplayName="Log Search User" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Searching user by email&quot;]" />
+            <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into User Email" EmptyFieldMode="SingleLine" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,260" sap2010:WorkflowViewState.IdRef="NTypeInto_1" Text="[userEmail]" Timeout="30" Version="V5">
+              <uix:NTypeInto.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='input-email' tag='INPUT' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NTypeInto.Target>
+            </uix:NTypeInto>
+            <uix:NClick ClickType="Single" DisplayName="Click Search" MouseButton="Left" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,260" sap2010:WorkflowViewState.IdRef="NClick_3" Timeout="30" Version="V5">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='btn-search-user' tag='BUTTON' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NClick.Target>
+            </uix:NClick>
+            <ui:LogMessage DisplayName="Log Click Delete" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Clicking Delete&quot;]" />
+            <uix:NCheckState CheckVisibility="True" DisplayName="Wait for Delete Button" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,360" sap2010:WorkflowViewState.IdRef="NCheckState_3" Timeout="30" Version="V5">
+              <uix:NCheckState.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='btn-delete-user' tag='BUTTON' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NCheckState.Target>
+              <uix:NCheckState.Exists>
+                <OutArgument x:TypeArguments="x:Boolean">[elementFound]</OutArgument>
+              </uix:NCheckState.Exists>
+            </uix:NCheckState>
+            <If Condition="[Not elementFound]" DisplayName="Validate Delete Button Visible" sap:VirtualizedContainerService.HintSize="450,179" sap2010:WorkflowViewState.IdRef="If_6">
+              <If.Then>
+                <Sequence DisplayName="Delete Button Missing" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                  <Throw DisplayName="Throw Delete Button Missing" Exception="[New UiPath.Core.ElementOperationException(&quot;BroadRiver Delete button did not appear after search.&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_5" />
+                </Sequence>
+              </If.Then>
+            </If>
+            <uix:NClick ClickType="Single" DisplayName="Click Delete" MouseButton="Left" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,260" sap2010:WorkflowViewState.IdRef="NClick_4" Timeout="30" Version="V5">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='btn-delete-user' tag='BUTTON' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NClick.Target>
+            </uix:NClick>
+            <ui:LogMessage DisplayName="Log Confirm Delete" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Confirming delete&quot;]" />
+            <!-- TODO: Re-indicate if BroadRiver source renames the confirmation id. This is a real strict UIA target, not a placeholder. -->
+            <uix:NClick ClickType="Single" DisplayName="Confirm Delete" MouseButton="Left" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,260" sap2010:WorkflowViewState.IdRef="NClick_5" Timeout="30" Version="V5">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl id='btn-confirm-delete' tag='BUTTON' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NClick.Target>
+            </uix:NClick>
+            <ui:LogMessage DisplayName="Log Verify Success" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Verifying delete success message&quot;]" />
+            <uix:NGetText DisplayName="Get Success Toast Text" ScopeIdentifier="2f8fb1c7-6d82-43ec-94e0-f2fbd6c62a2e" sap:VirtualizedContainerService.HintSize="450,260" sap2010:WorkflowViewState.IdRef="NGetText_1" Timeout="30" Version="V5">
+              <uix:NGetText.Target>
+                <uix:TargetAnchorable SearchSteps="Selector" Version="V6">
+                  <uix:TargetAnchorable.ScopeSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;html app='chrome.exe' title='BroadRiver*' /&gt;</InArgument>
+                  </uix:TargetAnchorable.ScopeSelectorArgument>
+                  <uix:TargetAnchorable.FullSelectorArgument>
+                    <InArgument x:TypeArguments="x:String">&lt;webctrl tag='BODY' /&gt;</InArgument>
+                  </uix:TargetAnchorable.FullSelectorArgument>
+                  <uix:TargetAnchorable.WaitForReadyArgument>
+                    <InArgument x:TypeArguments="uix:NWaitForReady">Interactive</InArgument>
+                  </uix:TargetAnchorable.WaitForReadyArgument>
+                </uix:TargetAnchorable>
+              </uix:NGetText.Target>
+              <uix:NGetText.Text>
+                <OutArgument x:TypeArguments="x:String">[resultText]</OutArgument>
+              </uix:NGetText.Text>
+            </uix:NGetText>
+          </Sequence>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+    </uix:NApplicationCard>
+    <If Condition="[resultText Is Nothing OrElse Not resultText.Contains(&quot;User deleted successfully&quot;)]" DisplayName="Validate Success Message" sap:VirtualizedContainerService.HintSize="450,179" sap2010:WorkflowViewState.IdRef="If_3">
+      <If.Then>
+        <Sequence DisplayName="Success Missing" sap2010:WorkflowViewState.IdRef="Sequence_11">
+          <Throw DisplayName="Throw Success Missing" Exception="[New BusinessRuleException(&quot;BroadRiver delete_user did not return expected success message. Result: &quot; + If(resultText, &quot;&quot;))]" sap2010:WorkflowViewState.IdRef="Throw_6" />
+        </Sequence>
+      </If.Then>
+    </If>
+    <ui:LogMessage DisplayName="Log Delete User Completed" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;BroadRiver delete_user completed successfully&quot;]" />
+  </Sequence>
+</Activity>

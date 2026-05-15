@@ -1,0 +1,87 @@
+- Window [ref=w10]:
+  - /process: explorer.exe
+  - /class: Shell_TrayWnd
+- Window "Windows PowerShell" [ref=w68]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Jobs - UiPath Orchestrator - Google Chrome" [ref=w70]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "ChatGPT" [ref=b1242]:
+    - /url: https://chatgpt.com/
+  - BrowserTab "Inbox (1,705) - ravindra.reddy33@gmail.com - Gmail" [ref=b1243]:
+    - /url: https://mail.google.com/mail/u/0/#inbox
+  - BrowserTab "Jobs - UiPath Orchestrator" [ref=b1244] [selected]:
+    - /url: https://cloud.uipath.com/rmadireddy33/rmadireddy33/orchestrator_/jobs(sidepanel:sidepanel/jobs/414fba74-3034-425d-bf88-d3b6112a6240/logs)?tid=47187&fid=519923&index=0&size=25&state=M4ewTgLgPgZglgUwDYBMoGMwIIYTiAOwBU4BbBKFOLdPQyhYdAPVYBIAGKNgRigCYoAZigAWALrigA%3D%3D
+  - BrowserTab "UiPath Challenge Strategy" [ref=b1245]:
+    - /url: https://chatgpt.com/c/69fd5ed9-071c-83ea-bf93-b5e4fe843a51
+  - BrowserTab "(1) Approve or reject human tasks/escalations from Outlook, Slack etc. - General Availability - Agentic Automation - UiPath Community Forum" [ref=b1246]:
+    - /url: https://forum.uipath.com/t/approve-or-reject-human-tasks-escalations-from-outlook-slack-etc-general-availability/5708430
+  - BrowserTab "(1) Latest topics - UiPath Community Forum" [ref=b1247]:
+    - /url: https://forum.uipath.com/latest
+  - BrowserTab "Low Fares Done Right | Frontier Airlines" [ref=b1248]:
+    - /url: https://www.flyfrontier.com/
+  - BrowserTab "Low Fares Done Right | Frontier Airlines" [ref=b1249]:
+    - /url: https://www.flyfrontier.com/
+  - BrowserTab "Low Fares Done Right | Frontier Airlines" [ref=b1250]:
+    - /url: https://www.flyfrontier.com/
+  - BrowserTab "Google Calendar - Event details" [ref=b1251]:
+    - /url: https://calendar.google.com/calendar/u/0/r/eventedit/MWlqMm0zcjZ2NnI5cW5sdmk3OGM2YjNrMjBfMjAyNjA1MTJUMDIzMDAwWiByYXZpbmRyYS5yZWRkeTMzQG0
+- Window [ref=w79]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;2ab49db3-7f43-4fcd-8415-fae910e9fe25]
+- Window "C:\Users\ravin\OneDrive\Documents\UiPathCodedAgentChallenge\Prompt2Provision\approvals\approval_status.json - Notepad++" [ref=w91]:
+  - /process: notepad++.exe
+  - /class: Notepad++
+- Window "broadriver - File Explorer" [ref=w94]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "jml_request.txt - Notepad" [ref=w98]:
+  - /process: notepad.exe
+  - /class: Notepad
+- Window "UiPath Assistant" [ref=w99]:
+  - /process: uipath.assistant.exe
+  - /class: Chrome_WidgetWin_1
+- Window "packages - File Explorer" [ref=w102] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "This PC - File Explorer" [ref=w106]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "Windows-SSD (C:) - File Explorer" [ref=w108]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "Inbox (319) - madireddy.ravindrareddy@gmail.com - Gmail - Google Chrome" [ref=w111] [incognito]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+- Window "Desktop - File Explorer" [ref=w115] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "Zoom Workplace" [ref=w134] [minimized]:
+  - /process: zoom.exe
+  - /class: ZPPTMainFrmWndClassEx
+- Window "_logs - File Explorer" [ref=w137] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window [ref=w249]:
+  - /process: explorer.exe
+  - /class: Shell_SecondaryTrayWnd
+- Window "Documents - File Explorer" [ref=w272] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "BlankProcess - File Explorer" [ref=w285] [minimized]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window [ref=w391] [minimized]:
+  - /process: intuitdataprotect.exe
+  - /class: WindowsForms10.Window.8.app.0.34f5582_r7_ad1
+- Window "McAfee Security Scan Plus" [ref=w400] [minimized]:
+  - /class: MSSP
+- Window "New tab - Personal - Microsoft​ Edge" [ref=w401] [minimized]:
+  - /process: msedge.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "New tab" [ref=b1252] [selected] [internal page]:
+    - /url: edge://newtab/
+- Window "Program Manager" [ref=w403]:
+  - /process: explorer.exe
+  - /class: Progman

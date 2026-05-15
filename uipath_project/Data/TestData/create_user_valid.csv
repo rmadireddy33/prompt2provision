@@ -1,0 +1,2 @@
+user_name,employee_id,email,department,region,user_type,requested_group,ui_value_to_select,risk_level,duration,requires_manager_approval,requires_app_owner_approval
+Sample User,E00001,sample.user@example.local,Sample Department,Sample Region,Sample Type,SAMPLE_GROUP,Sample Group,Sample Risk,Sample Duration,true,true
