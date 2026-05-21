@@ -25,7 +25,7 @@ The solution is designed for disconnected apps where identity lifecycle work mus
 
 The pipeline flow is:
 
-1. `agents/agent1_requirement_analysis.py` reads `data/jml_request.txt`, detects the application and operation from `app_profiles`, validates required fields, resolves entitlement metadata when applicable, and writes the queue transaction.
+1. `agents/agent1_requirement_analysis.py` reads the incoming identity-platform request. In this local workspace, `data/jml_request.txt` is used as the request input. The agent detects the application and operation from `app_profiles`, validates required fields, resolves entitlement metadata when applicable, and writes the queue transaction.
 2. `agents/agent4_router.py` checks `registry/workflow_registry.json` to decide whether an approved workflow already exists.
 3. If an approved workflow exists, the pipeline executes it through UiPath.
 4. If a workflow does not exist, the pipeline prepares a builder prompt and validation flow for creating one.
@@ -104,9 +104,9 @@ http://localhost:4000/
 
 ## How to Run
 
-1. Update the request file.
+1. Provide the incoming identity request.
 
-   Edit `data/jml_request.txt` with the disconnected app lifecycle request to process. This can be a JML provisioning request or an aggregation-related request. The request should include the application name, operation, and all required fields for that operation.
+   In production, this request comes from the identity platform or integration layer. In this local workspace, `data/jml_request.txt` is the stand-in input file for the disconnected app lifecycle request. This can be a JML provisioning request or an aggregation-related request. The request should include the application name, operation, and all required fields for that operation.
 
    Example fields for BroadRiver `create_user` provisioning:
 
@@ -146,21 +146,9 @@ http://localhost:4000/
 
    For aggregation scenarios, the approved workflow should write its extracted account, entitlement, or assignment data to the agreed output artifact for downstream identity processing.
 
-5. If the router returns `BUILD_WORKFLOW`, create and validate the missing workflow.
+5. If the router returns `BUILD_WORKFLOW`, let the pipeline continue the new-workflow path.
 
-   The generated builder prompt is written to:
-
-   ```text
-   prompts/agent2_codex_builder_prompt.txt
-   ```
-
-   The workflow must be added under:
-
-   ```text
-   uipath_project/workflows/apps/<application_id>/
-   ```
-
-   After the workflow is created, rerun the pipeline so validation, approval, registry update, deployment, and execution can continue.
+   The pipeline writes the builder prompt to `prompts/agent2_codex_builder_prompt.txt`, drives workflow creation, validates generated artifacts, updates the registry after approval, packages/deploys the UiPath project, and executes the process.
 
 ## Run the UiPath Project Directly
 
@@ -173,44 +161,32 @@ Use this path when you only want to run the existing UiPath package/process with
 
 ## How to Onboard New Application
 
-1. Add an application profile at `app_profiles/<application_id>.json`.
+In a real deployment, the lifecycle or aggregation request comes from the identity platform. The pipeline receives that request data, creates the queue transaction, routes it, and performs the required build/validation/execution flow. Operators should not manually create queue JSON or run each downstream step one by one.
+
+1. Add the application profile once at `app_profiles/<application_id>.json`.
 
    Include `application_id`, `application_name`, optional `aliases`, `base_url`, supported `operations`, operation detection `phrases`, `required_fields`, and any `entitlements`. Use `app_profiles/broadriver.json` as the reference shape.
 
-2. Add a UI map at `app_profiles/<application_id>_ui_map.json`.
+2. Add the UI map once at `app_profiles/<application_id>_ui_map.json`.
 
    Define each operation's `workflow_name`, ordered business steps, and success validation text. Do not store selectors in this file. Selectors must be captured from the live browser or desktop application during workflow creation and stored in the generated XAML/Object Repository artifacts.
 
-3. Add a request in `data/jml_request.txt`.
+3. Configure the identity platform to send lifecycle or aggregation requests into the pipeline input.
+
+   In this local challenge workspace, `data/jml_request.txt` represents that incoming identity-platform request. In production, the same request would come from the identity platform or integration layer rather than being typed manually into the file.
 
    The request must contain the application name or alias, an operation phrase, and all required fields from the application profile. For aggregation use cases, fields may describe the aggregation scope, source screen/report, output format, or target dataset instead of user provisioning attributes.
 
-4. Run the pipeline.
+4. Run the pipeline from the repository root.
 
    ```powershell
    py -3 run_autonomous_pipeline.py
    ```
 
-5. Create the missing workflow when the router returns `BUILD_WORKFLOW`.
+5. Let the pipeline handle the remaining steps.
 
-   Use `prompts/agent2_codex_builder_prompt.txt` as the implementation prompt. The workflow should be created under `uipath_project/workflows/apps/<application_id>/` and should include:
+   The pipeline analyzes the incoming request, creates the queue transaction, checks the approved workflow registry, executes an existing reusable workflow when one is available, or starts the new-workflow build path when the operation has not been automated yet.
 
-   - The operation XAML file
-   - `README.md`
-   - `test_data.json`
-   - `workflow_arguments.json`
+   For a new operation, the pipeline is responsible for producing the builder prompt, validating generated artifacts, approving/registering the workflow after review, packaging/deploying the UiPath project, and executing the process through the stable `Prompt2ProvisionUiPath` process in the `Development` Orchestrator folder.
 
-6. Validate the workflow.
-
-   ```powershell
-   uip rpa get-errors --file-path "uipath_project/workflows/apps/<application_id>/<workflow_name>.xaml" --project-dir "uipath_project" --output json
-   uip rpa build "uipath_project" --output json
-   ```
-
-7. Approve and register the workflow.
-
-   Once validation passes and the workflow is approved, add or update the entry in `registry/workflow_registry.json` so future requests for the same `<application_id>.<operation>` use the approved reusable workflow.
-
-8. Package and deploy the UiPath project.
-
-   Use the stable process name `Prompt2ProvisionUiPath` and deploy/update it in the `Development` Orchestrator folder. Future queue transactions can then route lifecycle and aggregation work for the new disconnected application automatically.
+After onboarding, future identity-platform requests for the same `<application_id>.<operation>` route automatically to the approved reusable workflow.
