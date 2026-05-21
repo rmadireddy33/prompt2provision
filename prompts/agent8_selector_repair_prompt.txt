@@ -3,33 +3,79 @@ You are Agent 8: UiPath Selector Repair Agent.
 The Orchestrator job failed for:
 
 Workflow key:
-broadriver.create_user
+broadriver.delete_user
 
 Application ID:
 broadriver
 
 Operation:
-create_user
+delete_user
 
 Workflow path:
-uipath_project/workflows/apps/broadriver/CreateUser.xaml
+uipath_project/workflows/apps/broadriver/DeleteUser.xaml
+
+Source files:
+- queues/pending_queue_item.json
+- app_profiles/broadriver.json
+- app_profiles/broadriver_ui_map.json
+- uipath_project/workflows/apps/broadriver/DeleteUser.xaml
+
+Object Repository files currently referenced by this workflow:
+- uipath_project/.objects/BTKp/unvm/3taf/.data/ObjectRepositoryScreenData/.attributes/SearchHash
+- uipath_project/.objects/BTKp/unvm/3taf/.data/ObjectRepositoryScreenData/.content
+- uipath_project/.objects/BTKp/unvm/3taf/.data/ObjectRepositoryScreenData/.hash
+- uipath_project/.objects/BTKp/unvm/3taf/.data/ObjectRepositoryScreenData/.images/.design/0lwl-aH1QkkGbbopyEAPW-Q
+- uipath_project/.objects/BTKp/unvm/3taf/.metadata
+- uipath_project/.objects/BTKp/unvm/3taf/0HWD/.data/ObjectRepositoryTargetData/.attributes/SearchHash
+- uipath_project/.objects/BTKp/unvm/3taf/0HWD/.data/ObjectRepositoryTargetData/.content
+- uipath_project/.objects/BTKp/unvm/3taf/0HWD/.data/ObjectRepositoryTargetData/.hash
+- uipath_project/.objects/BTKp/unvm/3taf/0HWD/.data/ObjectRepositoryTargetData/.images/.design/0utv31XKu5kOwI589qXs1GQ
+- uipath_project/.objects/BTKp/unvm/3taf/0HWD/.metadata
+- uipath_project/.objects/BTKp/unvm/3taf/9h9R/.data/ObjectRepositoryTargetData/.attributes/SearchHash
+- uipath_project/.objects/BTKp/unvm/3taf/9h9R/.data/ObjectRepositoryTargetData/.content
+- uipath_project/.objects/BTKp/unvm/3taf/9h9R/.data/ObjectRepositoryTargetData/.hash
+- uipath_project/.objects/BTKp/unvm/3taf/9h9R/.data/ObjectRepositoryTargetData/.images/.design/0yKn3nflUZkefqqXpbai4Kw
+- uipath_project/.objects/BTKp/unvm/3taf/9h9R/.metadata
+- uipath_project/.objects/BTKp/unvm/3taf/IaNi/.data/ObjectRepositoryTargetData/.attributes/SearchHash
+- uipath_project/.objects/BTKp/unvm/3taf/IaNi/.data/ObjectRepositoryTargetData/.content
+- uipath_project/.objects/BTKp/unvm/3taf/IaNi/.data/ObjectRepositoryTargetData/.hash
+- uipath_project/.objects/BTKp/unvm/3taf/IaNi/.data/ObjectRepositoryTargetData/.images/.design/0nr6usDwWuEGy8vCNTcEzJw
+- uipath_project/.objects/BTKp/unvm/3taf/IaNi/.metadata
+- uipath_project/.objects/BTKp/unvm/3taf/O2qI/.data/ObjectRepositoryTargetData/.attributes/SearchHash
+- uipath_project/.objects/BTKp/unvm/3taf/O2qI/.data/ObjectRepositoryTargetData/.content
+- uipath_project/.objects/BTKp/unvm/3taf/O2qI/.data/ObjectRepositoryTargetData/.hash
+- uipath_project/.objects/BTKp/unvm/3taf/O2qI/.data/ObjectRepositoryTargetData/.images/.design/0achaN4N_6kSUNm5mV5Ni1g
+- uipath_project/.objects/BTKp/unvm/3taf/O2qI/.metadata
+- uipath_project/.objects/BTKp/unvm/3taf/ijeQ/.data/ObjectRepositoryTargetData/.attributes/SearchHash
+- uipath_project/.objects/BTKp/unvm/3taf/ijeQ/.data/ObjectRepositoryTargetData/.content
+- uipath_project/.objects/BTKp/unvm/3taf/ijeQ/.data/ObjectRepositoryTargetData/.hash
+- uipath_project/.objects/BTKp/unvm/3taf/ijeQ/.data/ObjectRepositoryTargetData/.images/.design/07zNR1DQszUKkVnRW0g9abg
+- uipath_project/.objects/BTKp/unvm/3taf/ijeQ/.metadata
+- uipath_project/.objects/BTKp/unvm/3taf/ufDX/.data/ObjectRepositoryTargetData/.attributes/SearchHash
+- uipath_project/.objects/BTKp/unvm/3taf/ufDX/.data/ObjectRepositoryTargetData/.content
+- uipath_project/.objects/BTKp/unvm/3taf/ufDX/.data/ObjectRepositoryTargetData/.hash
+- uipath_project/.objects/BTKp/unvm/3taf/ufDX/.data/ObjectRepositoryTargetData/.images/.design/0fzvb-NN2VU6_C48WWme0pw
+- uipath_project/.objects/BTKp/unvm/3taf/ufDX/.metadata
+
+Base URL:
+http://localhost:4000/
 
 Error output:
 {
   "Result": "Success",
   "Code": "JobFaulted",
   "Data": {
-    "Key": "c77652c7-738f-4657-af8b-75db82932b21",
-    "StartTime": "2026-05-12T22:30:23.390Z",
-    "EndTime": "2026-05-12T22:33:35.573Z",
+    "Key": "4b2821f3-a1c3-43a7-aa93-74a7174244b0",
+    "StartTime": "2026-05-21T03:52:03.137Z",
+    "EndTime": "2026-05-21T03:53:25.013Z",
     "State": "Faulted",
     "JobPriority": "Normal",
     "SpecificPriorityValue": 45,
     "Source": "Manual",
     "SourceType": "Manual",
-    "BatchExecutionKey": "6a995527-f8d0-471c-b9f3-2a8c80ae556d",
-    "Info": "Could not find the user-interface (UI) element for this action.\r\n\r\nPossible solutions:\r\n â€¢  Ensure application is opened and the UI element is visible on the screen at execution time\r\n â€¢  Edit the Target of the UI activity and use Validation to debug the issue.\r\n â€¢  If needed, re-indicate the element as its properties might have changed\r\n â€¢  Use \"Check state\" activity to check the application state before executing the action\r\n â€¢  Increase the \"Delay before\" value to allow time to the application to render entirely and become responsive \r\n\r\n[Target]: Strict selector failure:\r\n<webctrl id='nav-adn' tag='BUTTON' />\n\r\nThe closest selector matches found are:\r\n[94%] <webctrl id='nav-admin' tag='BUTTON'/>\n[80%] <webctrl id='nav-dashboard' tag='BUTTON'/>\n[73%] <webctrl id='nav-create-user' tag='BUTTON'/>\n[73%] <webctrl id='nav-modify-user' tag='BUTTON'/>\n[73%] <webctrl id='nav-delete-user' tag='BUTTON'/>\n[69%] <webctrl id='nav-list-users' tag='BUTTON'/>\n[68%] <webctrl id='nav-list-groups' tag='BUTTON'/>\n[58%] <webctrl id='quick-create-user' tag='BUTTON'/>\n[58%] <webctrl id='quick-modify-user' tag='BUTTON'/>\n[58%] <webctrl id='quick-delete-user' tag='BUTTON'/>)\r\n\r\nin workflows\\apps\\broadriver\\CreateUser.xaml\r\n    at NClick \"Click Admin\"\r\n    at Sequence \"Do\"\r\n    at NApplicationCard \"Use Application Browser BroadRiver\"\r\n    at Sequence \"Try\"\r\n    at TryCatch \"Create BroadRiver User Try Catch\"\r\n    at Sequence \"BroadRiver Create User\"\r\n    at CreateUser \"CreateUser\"\r\n--- End of workflow stack trace from previous location ---\r\nin Main.xaml\r\n    at InvokeWorkflowFile \"Invoke Selected Application Workflow\"\r\n    at Sequence \"Prompt2Provision Queue Router\"\r\n    at Main \"Main\"\r\n\r\nUiPath.UIAutomationNext.Exceptions.NodeNotFoundException: Could not find the user-interface (UI) element for this action.\r\n\r\nPossible solutions:\r\n â€¢  Ensure application is opened and the UI element is visible on the screen at execution time\r\n â€¢  Edit the Target of the UI activity and use Validation to debug the issue.\r\n â€¢  If needed, re-indicate the element as its properties might have changed\r\n â€¢  Use \"Check state\" activity to check the application state before executing the action\r\n â€¢  Increase the \"Delay before\" value to allow time to the application to render entirely and become responsive \r\n\r\n[Target]: Strict selector failure:\r\n<webctrl id='nav-adn' tag='BUTTON' />\n\r\nThe closest selector matches found are:\r\n[94%] <webctrl id='nav-admin' tag='BUTTON'/>\n[80%] <webctrl id='nav-dashboard' tag='BUTTON'/>\n[73%] <webctrl id='nav-create-user' tag='BUTTON'/>\n[73%] <webctrl id='nav-modify-user' tag='BUTTON'/>\n[73%] <webctrl id='nav-delete-user' tag='BUTTON'/>\n[69%] <webctrl id='nav-list-users' tag='BUTTON'/>\n[68%] <webctrl id='nav-list-groups' tag='BUTTON'/>\n[58%] <webctrl id='quick-create-user' tag='BUTTON'/>\n[58%] <webctrl id='quick-modify-user' tag='BUTTON'/>\n[58%] <webctrl id='quick-delete-user' tag='BUTTON'/>)\r\n   at UiPath.UIAutomationNext.Activities.TargetCommonLogic.GetSearchResultAsync(IRuntimeContext runtimeContext, ITargetAnchorable target, CancellationToken token)\r\n   at UiPath.UIAutomationNext.Activities.NClick.SearchAndSetTargetAsync(IRuntimeContext context, ClickData clickData, CancellationToken cancellationToken)\r\n   at UiPath.UIAutomationNext.Activities.NClick.ExecuteAsync(IActivityContextWrapper context, CancellationToken token)\r\n   at UiPath.UIAutomationNext.Activities.RecoverableNativeActivity.ExecuteActivityAsync(IActivityContextWrapper contextWrapper, CancellationToken cancellationToken)\r\n   at UiPath.UIAutomationNext.Activities.RecoverableNativeActivity.ExecuteActivityAsync(IActivityContextWrapper contextWrapper, CancellationToken cancellationToken)\r\n   at UiPath.UIAutomationNext.Activities.RecoverableNativeActivity.ExecuteAsync(NativeActivityContext context, CancellationToken cancellationToken)\r\n   at UiPath.Shared.Activities.AsyncTaskNativeImplementation.BookmarkResumptionCallback(NativeActivityContext context, Object value)\r\n   at UiPath.Shared.Activities.AsyncTaskNativeActivity.BookmarkResumptionCallback(NativeActivityContext context, Bookmark bookmark, Object value)\r\n   at UiPath.Shared.Activities.ContinuableAsyncNativeActivity.BookmarkResumptionCallback(NativeActivityContext context, Bookmark bookmark, Object value)\r\n   at System.Activities.Runtime.BookmarkWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)\r\n--- End of stack trace from previous location ---\r\n   at UiPath.UIAutomationNext.Activities.NApplicationCard.OnFault(NativeActivityFaultContext faultContext, Exception propagatedException, ActivityInstance propagatedFrom)\r\n   at System.Activities.Runtime.FaultCallbackWrapper.FaultWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)\r\n--- End of stack trace from previous location ---\r\n   at UiPath.Executor.Core.Runners.BaseRunner.EndExecute(IAsyncResult result)\r\n   at UiPath.Executor.Core.Runners.WorkflowInProcessRunner.EndExecute(IAsyncResult result)\r\n   at UiPath.Core.Activities.ExecutorInvokeActivity.EndExecute(AsyncCodeActivityContext context, IAsyncResult result)\r\n   at System.Activities.AsyncCodeActivity.CompleteAsyncCodeActivityData.CompleteAsyncCodeActivityWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)",
-    "CreationTime": "2026-05-12T22:30:22.970Z",
+    "BatchExecutionKey": "6dc1f7f1-384b-43cc-b6bc-8fa4621a72f1",
+    "Info": "BroadRiver Admin navigation did not appear before clicking.\r\n\r\nin workflows\\apps\\broadriver\\DeleteUser.xaml\r\n    at Throw \"Throw Admin Navigation Missing\"\r\n    at Sequence \"Admin Navigation Missing\"\r\n    at NCheckState \"Wait For Admin Navigation\"\r\n    at Sequence \"Delete User UI Steps\"\r\n    at NApplicationCard \"Use BroadRiver Application\"\r\n    at Sequence \"BroadRiver Delete User\"\r\n    at DeleteUser \"DeleteUser\"\r\n--- End of workflow stack trace from previous location ---\r\nin Main.xaml\r\n    at InvokeWorkflowFile \"Invoke Selected Application Workflow\"\r\n    at Sequence \"Prompt2Provision Queue Router\"\r\n    at Main \"Main\"\r\n\r\nUiPath.Core.BusinessRuleException: BroadRiver Admin navigation did not appear before clicking.\r\n   at System.Activities.Statements.Throw.Execute(CodeActivityContext context)\r\n   at System.Activities.CodeActivity.InternalExecute(ActivityInstance instance, ActivityExecutor executor, BookmarkManager bookmarkManager)\r\n   at System.Activities.Runtime.ActivityExecutor.ExecuteActivityWorkItem.ExecuteBody(ActivityExecutor executor, BookmarkManager bookmarkManager, Location resultLocation)\r\n--- End of stack trace from previous location ---\r\n   at UiPath.UIAutomationNext.Activities.NCheckState.OnFault(NativeActivityFaultContext faultContext, Exception propagatedException, ActivityInstance propagatedFrom)\r\n   at System.Activities.Runtime.FaultCallbackWrapper.FaultWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)\r\n--- End of stack trace from previous location ---\r\n   at UiPath.UIAutomationNext.Activities.NApplicationCard.OnFault(NativeActivityFaultContext faultContext, Exception propagatedException, ActivityInstance propagatedFrom)\r\n   at System.Activities.Runtime.FaultCallbackWrapper.FaultWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)\r\n--- End of stack trace from previous location ---\r\n   at UiPath.Executor.Core.Runners.BaseRunner.EndExecute(IAsyncResult result)\r\n   at UiPath.Executor.Core.Runners.WorkflowInProcessRunner.EndExecute(IAsyncResult result)\r\n   at UiPath.Core.Activities.ExecutorInvokeActivity.EndExecute(AsyncCodeActivityContext context, IAsyncResult result)\r\n   at System.Activities.AsyncCodeActivity.CompleteAsyncCodeActivityData.CompleteAsyncCodeActivityWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)",
+    "CreationTime": "2026-05-21T03:52:02.623Z",
     "ReleaseName": "Prompt2ProvisionUiPath",
     "Type": "Unattended",
     "EnvironmentVariables": "",
@@ -39,7 +85,7 @@ Error output:
     "HasVideoRecorded": false,
     "RuntimeType": "Unattended",
     "RequiresUserInteraction": false,
-    "ReleaseVersionId": 875070,
+    "ReleaseVersionId": 875706,
     "EntryPointPath": "Main.xaml",
     "OrganizationUnitId": 231056,
     "FolderKey": "6a469e39-86f5-44c1-baab-1822f61c14aa",
@@ -49,90 +95,42 @@ Error output:
     "LocalSystemAccount": "RAVIN",
     "OrchestratorUserIdentity": "ravindra.reddy33@gmail.com",
     "RemoteControlAccess": "None",
-    "LastModificationTime": "2026-05-12T22:33:35.573Z",
+    "LastModificationTime": "2026-05-21T03:53:25.013Z",
     "JobError": {},
     "ErrorCode": "Robot",
-    "TraceId": "c77652c7738f4657af8b75db82932b21",
+    "TraceId": "4b2821f3a1c343a7aa9374a7174244b0",
     "AutopilotForRobots": {
       "Enabled": false,
       "HealingEnabled": false
     },
-    "Id": 61522151,
-    "Duration": "197s"
+    "Id": 61582419,
+    "Duration": "83s"
   }
 }
 
-Could not find the user-interface (UI) element for this action.
+BroadRiver Admin navigation did not appear before clicking.
 
-Possible solutions:
- â€¢  Ensure application is opened and the UI element is visible on the screen at execution time
- â€¢  Edit the Target of the UI activity and use Validation to debug the issue.
- â€¢  If needed, re-indicate the element as its properties might have changed
- â€¢  Use "Check state" activity to check the application state before executing the action
- â€¢  Increase the "Delay before" value to allow time to the application to render entirely and become responsive 
-
-[Target]: Strict selector failure:
-<webctrl id='nav-adn' tag='BUTTON' />
-
-The closest selector matches found are:
-[94%] <webctrl id='nav-admin' tag='BUTTON'/>
-[80%] <webctrl id='nav-dashboard' tag='BUTTON'/>
-[73%] <webctrl id='nav-create-user' tag='BUTTON'/>
-[73%] <webctrl id='nav-modify-user' tag='BUTTON'/>
-[73%] <webctrl id='nav-delete-user' tag='BUTTON'/>
-[69%] <webctrl id='nav-list-users' tag='BUTTON'/>
-[68%] <webctrl id='nav-list-groups' tag='BUTTON'/>
-[58%] <webctrl id='quick-create-user' tag='BUTTON'/>
-[58%] <webctrl id='quick-modify-user' tag='BUTTON'/>
-[58%] <webctrl id='quick-delete-user' tag='BUTTON'/>)
-
-in workflows\apps\broadriver\CreateUser.xaml
-    at NClick "Click Admin"
-    at Sequence "Do"
-    at NApplicationCard "Use Application Browser BroadRiver"
-    at Sequence "Try"
-    at TryCatch "Create BroadRiver User Try Catch"
-    at Sequence "BroadRiver Create User"
-    at CreateUser "CreateUser"
+in workflows\apps\broadriver\DeleteUser.xaml
+    at Throw "Throw Admin Navigation Missing"
+    at Sequence "Admin Navigation Missing"
+    at NCheckState "Wait For Admin Navigation"
+    at Sequence "Delete User UI Steps"
+    at NApplicationCard "Use BroadRiver Application"
+    at Sequence "BroadRiver Delete User"
+    at DeleteUser "DeleteUser"
 --- End of workflow stack trace from previous location ---
 in Main.xaml
     at InvokeWorkflowFile "Invoke Selected Application Workflow"
     at Sequence "Prompt2Provision Queue Router"
     at Main "Main"
 
-UiPath.UIAutomationNext.Exceptions.NodeNotFoundException: Could not find the user-interface (UI) element for this action.
-
-Possible solutions:
- â€¢  Ensure application is opened and the UI element is visible on the screen at execution time
- â€¢  Edit the Target of the UI activity and use Validation to debug the issue.
- â€¢  If needed, re-indicate the element as its properties might have changed
- â€¢  Use "Check state" activity to check the application state before executing the action
- â€¢  Increase the "Delay before" value to allow time to the application to render entirely and become responsive 
-
-[Target]: Strict selector failure:
-<webctrl id='nav-adn' tag='BUTTON' />
-
-The closest selector matches found are:
-[94%] <webctrl id='nav-admin' tag='BUTTON'/>
-[80%] <webctrl id='nav-dashboard' tag='BUTTON'/>
-[73%] <webctrl id='nav-create-user' tag='BUTTON'/>
-[73%] <webctrl id='nav-modify-user' tag='BUTTON'/>
-[73%] <webctrl id='nav-delete-user' tag='BUTTON'/>
-[69%] <webctrl id='nav-list-users' tag='BUTTON'/>
-[68%] <webctrl id='nav-list-groups' tag='BUTTON'/>
-[58%] <webctrl id='quick-create-user' tag='BUTTON'/>
-[58%] <webctrl id='quick-modify-user' tag='BUTTON'/>
-[58%] <webctrl id='quick-delete-user' tag='BUTTON'/>)
-   at UiPath.UIAutomationNext.Activities.TargetCommonLogic.GetSearchResultAsync(IRuntimeContext runtimeContext, ITargetAnchorable target, CancellationToken token)
-   at UiPath.UIAutomationNext.Activities.NClick.SearchAndSetTargetAsync(IRuntimeContext context, ClickData clickData, CancellationToken cancellationToken)
-   at UiPath.UIAutomationNext.Activities.NClick.ExecuteAsync(IActivityContextWrapper context, CancellationToken token)
-   at UiPath.UIAutomationNext.Activities.RecoverableNativeActivity.ExecuteActivityAsync(IActivityContextWrapper contextWrapper, CancellationToken cancellationToken)
-   at UiPath.UIAutomationNext.Activities.RecoverableNativeActivity.ExecuteActivityAsync(IActivityContextWrapper contextWrapper, CancellationToken cancellationToken)
-   at UiPath.UIAutomationNext.Activities.RecoverableNativeActivity.ExecuteAsync(NativeActivityContext context, CancellationToken cancellationToken)
-   at UiPath.Shared.Activities.AsyncTaskNativeImplementation.BookmarkResumptionCallback(NativeActivityContext context, Object value)
-   at UiPath.Shared.Activities.AsyncTaskNativeActivity.BookmarkResumptionCallback(NativeActivityContext context, Bookmark bookmark, Object value)
-   at UiPath.Shared.Activities.ContinuableAsyncNativeActivity.BookmarkResumptionCallback(NativeActivityContext context, Bookmark bookmark, Object value)
-   at System.Activities.Runtime.BookmarkWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)
+UiPath.Core.BusinessRuleException: BroadRiver Admin navigation did not appear before clicking.
+   at System.Activities.Statements.Throw.Execute(CodeActivityContext context)
+   at System.Activities.CodeActivity.InternalExecute(ActivityInstance instance, ActivityExecutor executor, BookmarkManager bookmarkManager)
+   at System.Activities.Runtime.ActivityExecutor.ExecuteActivityWorkItem.ExecuteBody(ActivityExecutor executor, BookmarkManager bookmarkManager, Location resultLocation)
+--- End of stack trace from previous location ---
+   at UiPath.UIAutomationNext.Activities.NCheckState.OnFault(NativeActivityFaultContext faultContext, Exception propagatedException, ActivityInstance propagatedFrom)
+   at System.Activities.Runtime.FaultCallbackWrapper.FaultWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)
 --- End of stack trace from previous location ---
    at UiPath.UIAutomationNext.Activities.NApplicationCard.OnFault(NativeActivityFaultContext faultContext, Exception propagatedException, ActivityInstance propagatedFrom)
    at System.Activities.Runtime.FaultCallbackWrapper.FaultWorkItem.Execute(ActivityExecutor executor, BookmarkManager bookmarkManager)
@@ -151,13 +149,45 @@ Your task:
 1. Inspect the failed workflow XAML.
 2. Inspect app_profiles/broadriver.json.
 3. Inspect app_profiles/broadriver_ui_map.json.
-4. Fix selector, UIAutomation, timeout, or synchronization issues.
-5. Use Modern UiPath UIAutomation activities.
-6. Keep values dynamic; do not hardcode runtime request values.
-7. Add Check App State / Wait for Element Appear where needed.
-8. Update the workflow file.
-9. Update README.md with repair notes.
-10. Do not create placeholder-only workflows.
+4. Identify the failed step from the Orchestrator error and workflow stack trace.
+5. Fix selector, UIAutomation, timeout, or synchronization issues.
+6. Use Modern UiPath UIAutomation activities.
+7. Keep values dynamic; do not hardcode runtime request values.
+8. Add Check App State / Wait for Element Appear where needed.
+9. Update the workflow file.
+10. Update the Object Repository files listed above for every repaired target whose workflow XAML keeps an Object Repository `Reference`.
+11. Update README.md with repair notes.
+12. Do not create placeholder-only workflows.
+
+Fast repair scope:
+- Do not perform a broad repository rewrite. Focus on the failed activity from the stack trace plus the immediately dependent targets needed to reach and validate that screen.
+- Use the source files above as the starting set. Search elsewhere only when the failed workflow references another local file.
+- Prefer patching the captured target for the failing OR element over recreating unrelated screens or elements.
+
+Live UI target capture requirements:
+- Match Agent 2's selector standard: use strict BroadRiver selectors captured from the live browser/UI screen during repair.
+- Do not read selectors from `app_profiles/*.json` or `app_profiles/*_ui_map.json`; profiles only define operations, fields, steps, and success text.
+- Get repaired selectors from the browser/UI screen itself using UiPath UI Automation capture.
+- Start with a UIA window baseline, then capture the failed interaction target and any dependent targets screen by screen.
+- Use `uip rpa uia` / target configuration output as the source of truth for `NApplicationCard`, `NClick`, `NTypeInto`, `NGetText`, and related targets.
+- Treat `uip rpa uia snapshot inspect` plus `uip rpa uia interact get-all <ref>` output from the live browser/UI as valid live capture evidence when it reports element attributes such as `id`, `tag`, `title`, `url`, and `app`.
+- If `uip rpa uia snapshot capture` fails with a transient Studio named-pipe error such as `connect EPERM \\.\pipe\UiPathStudio_*`, do not infer selectors from the error output. Retry with `--log-level debug`; if it still fails, use `snapshot inspect` to identify the live browser tab and `interact get-all` on the relevant element refs before deciding live capture is blocked.
+- A "closest selector matches" list in the runtime failure is diagnostic only. It can point to candidates to verify, but it is not selector evidence unless the same selector is confirmed through live UIA capture/inspection.
+- Do not hand-write, guess, or persist selectors in the app profile.
+- Store selector evidence only in the generated UiPath workflow/Object Repository artifacts and optional workflow README notes.
+- If the browser is not already on the required screen, open the application from `in_BaseUrl` / queue base_url and navigate through the operation steps before capturing.
+- If live capture cannot be completed, stop with a clear blocker instead of guessing selectors.
+
+Object Repository repair requirements:
+- If you change a `TargetAnchorable` or `TargetApp` in the XAML and it has a `Reference`, update the matching `.objects/**/ObjectRepositoryTargetData/.content` or `.objects/**/ObjectRepositoryScreenData/.content` file with the same captured selector, target metadata, and screenshot reference.
+- Preserve existing Object Repository references when possible. If capture creates a replacement reference, update the workflow XAML, the matching `.metadata`, and any affected OR screen/element content so the project does not contain stale referenced targets.
+- Do not leave a selector fixed only in XAML while the referenced Object Repository target still contains the old selector.
+- Before finishing, verify that each changed XAML `Reference` value has a corresponding `.objects` metadata/content entry and that the selector in the OR content matches the selector in the workflow target.
+
+Validation requirements before finishing repair:
+- Run `uip rpa get-errors --file-path "uipath_project/workflows/apps/broadriver/DeleteUser.xaml" --project-dir "uipath_project" --output json` and fix every diagnostic.
+- Run `uip rpa build "uipath_project" --output json` and fix build failures before packaging or approval.
+- Treat `get-errors` success alone as insufficient because build catches invalid activity members and enum values.
 
 After repairing, the project will check the current Orchestrator package/process version,
 package the next patch version, deploy it, and run again.

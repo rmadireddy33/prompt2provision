@@ -1,7 +1,7 @@
 {
   "Workflows": [
     {
-      "Path": "workflows/apps/broadriver/CreateUser.xaml",
+      "Path": "Main.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": null,
       "ArgumentsSectionElementsOrder": null,
@@ -9,7 +9,7 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Main.xaml",
+      "Path": "workflows/apps/broadriver/DeleteUser.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": null,
       "ArgumentsSectionElementsOrder": null,

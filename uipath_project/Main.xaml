@@ -67,7 +67,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Starting Transaction" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Starting transaction&quot;]" />
-    <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="Prompt2Provision_QueueDataPath" CacheStrategy="None" DisplayName="Get Asset" sap:VirtualizedContainerService.HintSize="450,176" sap2010:WorkflowViewState.IdRef="GetRobotAsset_1">
+    <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="Prompt2Provision_QueueDataPath" CacheStrategy="None" DisplayName="Get Asset" FolderPath="Development" sap:VirtualizedContainerService.HintSize="450,176" sap2010:WorkflowViewState.IdRef="GetRobotAsset_1">
       <ui:GetRobotAsset.Value>
         <OutArgument x:TypeArguments="x:String">[queueFilePath]</OutArgument>
       </ui:GetRobotAsset.Value>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryTargetData ContentHash="5TU6LdN7EEu3ki2jZ6igiA" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryTargetData.Data>
+    <TargetAnchorable x:Key="TargetAnchorable" DesignTimeRectangle="329, 565, 934, 23" DesignTimeScaleFactor="1" ElementType="Button" ElementVisibilityArgument="Interactive" FullSelectorArgument="&lt;webctrl id='btn-delete-user' tag='BUTTON' /&gt;" Guid="873d0611-4488-4236-8bc0-95449188beb7" ScopeSelectorArgument="&lt;html app='msedge.exe' title='BroadRiver*' url='http://localhost:4000/*' /&gt;" SearchSteps="Selector" Version="V6">
+      <imageRef attrName="InformativeScreenshot" originalValue="47471aab5d98c965f77d0fe36bc421f1.jpg" xmlns="">0fzvb-NN2VU6_C48WWme0pw</imageRef>
+    </TargetAnchorable>
+  </ObjectRepositoryTargetData.Data>
+</ObjectRepositoryTargetData>

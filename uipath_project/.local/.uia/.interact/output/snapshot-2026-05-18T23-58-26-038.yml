@@ -1,0 +1,45 @@
+- Window [ref=w12]:
+  - /process: explorer.exe
+  - /class: Shell_TrayWnd
+- Window "BroadRiver Admin Portal - Personal - Microsoft​ Edge" [ref=w17]:
+  - /process: msedge.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "BroadRiver Admin Portal" [ref=b692] [selected]:
+    - /url: http://localhost:4000/
+- Window "UiPath Assistant" [ref=w22]:
+  - /process: uipath.assistant.exe
+  - /class: Chrome_WidgetWin_1
+- Window [ref=w29]:
+  - /process: uipath.uiautomation.exe
+  - /class: WindowsForms10.Window.8.app.0.25468f2_r3_ad1
+- Window "Windows PowerShell" [ref=w32]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Prompt2Provision - File Explorer" [ref=w35]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "npm install" [ref=w37]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window [ref=w45]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;18fb8e9f-1e3e-4a20-bb08-0f0d4852e52a]
+- Window [ref=w100]:
+  - /process: explorer.exe
+  - /class: ApplicationFrameWindow
+  - BrowserTab [ref=b691] [selected]
+- Window "Loading Microsoft Teams" [ref=w102] [minimized]:
+  - /process: teams.exe
+  - /class: Chrome_WidgetWin_1
+- Window "C:\Users\ravin\OneDrive\Documents\UiPathCodedAgentChallenge\Prompt2Provision\app_profiles\broadriver_ui_map.json - Notepad++" [ref=w122] [minimized]:
+  - /process: notepad++.exe
+  - /class: Notepad++
+- Window [ref=w123] [minimized]:
+  - /process: intuitdataprotect.exe
+  - /class: WindowsForms10.Window.8.app.0.34f5582_r7_ad1
+- Window [ref=w126]:
+  - /process: explorer.exe
+  - /class: Shell_SecondaryTrayWnd
+- Window "Program Manager" [ref=w179]:
+  - /process: explorer.exe
+  - /class: Progman

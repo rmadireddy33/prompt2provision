@@ -1,2 +1,7 @@
 {
+  "workflow_key": "broadriver.delete_user",
+  "approved": true,
+  "approved_by": "PowerShell Human Reviewer",
+  "approval_reason": "Approved from interactive pipeline prompt",
+  "approved_at": "2026-05-19T05:13:52.627113Z"
 }

@@ -1,0 +1,14 @@
+﻿{
+  "Name": "Mark User Deleted Button",
+  "Type": "Element",
+  "TaxonomyType": "Button",
+  "Id": "ufDXXqxxtUmiKrbBvbSiXA",
+  "Reference": "hE-3mc5q3kSnc1nDJYPVPQ/ufDXXqxxtUmiKrbBvbSiXA",
+  "ParentRef": "hE-3mc5q3kSnc1nDJYPVPQ/3taf9CyHLkOidvDLIasL3g",
+  "Created": "2026-05-19T03:54:41.7596039Z",
+  "Updated": "2026-05-21T03:58:00.0000000Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.4.1.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=25.12.1.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

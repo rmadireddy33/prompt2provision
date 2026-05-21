@@ -1,5 +1,5 @@
 {
-  "workflow_key": "broadriver.create_user",
+  "workflow_key": "broadriver.delete_user",
   "execution_status": "SUCCESS",
   "message": "Reusable workflow executed with dynamic queue data",
   "execution_mode": "ORCHESTRATOR_READY",

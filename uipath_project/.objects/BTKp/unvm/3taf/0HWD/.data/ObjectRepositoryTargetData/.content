@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryTargetData ContentHash="NPUUbD7WtUS2TVzrHfhwEA" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryTargetData.Data>
+    <TargetAnchorable x:Key="TargetAnchorable" DesignTimeRectangle="309, 189, 420, 42" DesignTimeScaleFactor="1" ElementType="InputBox" ElementVisibilityArgument="Interactive" FullSelectorArgument="&lt;webctrl id='input-delete-email-search' tag='INPUT' /&gt;" Guid="a2ea61d3-c7f5-4675-8d65-e041f1010de0" ScopeSelectorArgument="&lt;html app='msedge.exe' title='BroadRiver*' url='http://localhost:4000/*' /&gt;" SearchSteps="Selector" Version="V6">
+      <imageRef attrName="InformativeScreenshot" originalValue="5356a5bdf619cdd5dd356553d44bd850.jpg" xmlns="">0utv31XKu5kOwI589qXs1GQ</imageRef>
+    </TargetAnchorable>
+  </ObjectRepositoryTargetData.Data>
+</ObjectRepositoryTargetData>

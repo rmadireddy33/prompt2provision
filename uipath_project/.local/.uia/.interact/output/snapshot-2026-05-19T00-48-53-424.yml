@@ -1,0 +1,56 @@
+- Window "Zoom Workplace" [ref=w25]:
+  - /process: zoom.exe
+  - /class: ZPFloatVideoWndClass
+- Window "Screen sharing meeting controls" [ref=w29]:
+  - /process: zoom.exe
+  - /class: ZPFloatToolbarClass
+- Window "Annotation Entry Point" [ref=w32]:
+  - /process: zoom.exe
+  - /class: ZPAnnotateEntryPointClass
+- Window [ref=w46]:
+  - /process: explorer.exe
+  - /class: Shell_SecondaryTrayWnd
+- Window "Windows PowerShell" [ref=w79]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Prompt2Provision - File Explorer" [ref=w81]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "C:\Users\ravin\OneDrive\Documents\UiPathCodedAgentChallenge\Prompt2Provision\data\jml_request.txt - Notepad++" [ref=w85]:
+  - /process: notepad++.exe
+  - /class: Notepad++
+- Window "New.png" [ref=w86]:
+  - /process: photos.exe
+  - /class: WinUIDesktopWin32WindowClass
+- Window "jml_request.txt - Notepad" [ref=w87]:
+  - /process: notepad.exe
+  - /class: Notepad
+- Window "Untitled - Notepad" [ref=w88]:
+  - /process: notepad.exe
+  - /class: Notepad
+- Window "Processes - UiPath Orchestrator - Google Chrome" [ref=w89]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "Processes - UiPath Orchestrator" [ref=b950] [selected]:
+    - /url: https://cloud.uipath.com/rmadireddy33/rmadireddy33/orchestrator_/processes?tid=47187&fid=231056&index=0&size=25&state=M4ewTgLgPgZglgUwDYBMoDsCGBbBUVxgIDGEcI6UmwxAevQCQAMUDAjFAExQDMUALAF1BQA%3D
+- Window "Zoom Workplace" [ref=w129] [minimized]:
+  - /process: zoom.exe
+  - /class: ZPPTMainFrmWndClassEx
+- Window "npm install" [ref=w197] [minimized]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "UiPath Assistant" [ref=w235]:
+  - /process: uipath.assistant.exe
+  - /class: Chrome_WidgetWin_1
+- Window "Microsoft Teams" [ref=w294] [minimized]:
+  - /process: teams.exe
+  - /class: Chrome_WidgetWin_1
+- Window [ref=w295] [minimized]:
+  - /process: intuitdataprotect.exe
+  - /class: WindowsForms10.Window.8.app.0.34f5582_r7_ad1
+- Window [ref=w371]:
+  - /process: explorer.exe
+  - /class: Shell_TrayWnd
+- Window "Program Manager" [ref=w372]:
+  - /process: explorer.exe
+  - /class: Progman

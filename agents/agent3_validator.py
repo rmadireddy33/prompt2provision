@@ -1,4 +1,7 @@
 import json
+import os
+import shutil
+import subprocess
 from pathlib import Path
 
 
@@ -40,6 +43,52 @@ def add_issue(issues, code, message, path=None, value=None):
     if value is not None:
         issue["value"] = value
     issues.append(issue)
+
+
+def resolve_command(command):
+    name = command[0]
+
+    if os.name == "nt" and name == "uip":
+        npm_uip_cmd = Path.home() / "AppData" / "Roaming" / "npm" / "uip.cmd"
+        if npm_uip_cmd.exists():
+            return [str(npm_uip_cmd), *command[1:]]
+
+    resolved = shutil.which(name)
+    if resolved:
+        return [resolved, *command[1:]]
+
+    return command
+
+
+def run_command(command):
+    try:
+        result = subprocess.run(
+            resolve_command(command),
+            cwd=ROOT_DIR,
+            text=True,
+            capture_output=True,
+        )
+    except FileNotFoundError as exc:
+        return {
+            "returncode": 127,
+            "stdout": "",
+            "stderr": f"Executable not found: {command[0]} ({exc})",
+        }
+
+    return {
+        "returncode": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
+def command_summary(result):
+    text = "\n".join(
+        part.strip()
+        for part in [result.get("stderr", ""), result.get("stdout", "")]
+        if part and part.strip()
+    )
+    return text[:4000]
 
 
 def get_runtime_values(queue_item):
@@ -84,6 +133,91 @@ def scan_for_hardcoded_values(workflow_folder, runtime_values, issues):
                 )
 
 
+def validate_profiles_do_not_store_selectors(ui_map, ui_map_path, issues):
+    for operation, metadata in ui_map.get("operations", {}).items():
+        if isinstance(metadata, dict) and "selectors" in metadata:
+            add_issue(
+                issues,
+                "PROFILE_SELECTOR_STORAGE",
+                "UI map must not store selectors; selectors must be captured from the live UI/browser during workflow generation",
+                path=ui_map_path,
+                value=operation,
+            )
+
+
+def validate_modern_uia_structure(workflow_path, issues):
+    if not workflow_path.exists():
+        return
+
+    content = workflow_path.read_text(encoding="utf-8")
+    required_fragments = [
+        "uix:NApplicationCard",
+        "uix:TargetApp",
+        "uix:TargetAnchorable",
+    ]
+    missing_fragments = [
+        fragment for fragment in required_fragments if fragment not in content
+    ]
+    if missing_fragments:
+        add_issue(
+            issues,
+            "MISSING_MODERN_UIA_TARGETS",
+            "Generated workflow does not contain captured Modern UIAutomation targets",
+            path=workflow_path,
+            value=", ".join(missing_fragments),
+        )
+
+
+def validate_uipath_workflow(workflow_path, issues):
+    if not workflow_path.exists():
+        return {
+            "get_errors": None,
+            "build": None,
+        }
+
+    get_errors = run_command([
+        "uip",
+        "rpa",
+        "get-errors",
+        "--file-path",
+        str(workflow_path),
+        "--project-dir",
+        str(UIPATH_PROJECT_DIR),
+        "--output",
+        "json",
+    ])
+    if get_errors["returncode"] != 0:
+        add_issue(
+            issues,
+            "UIPATH_GET_ERRORS_FAILED",
+            "UiPath get-errors reported diagnostics for the generated workflow",
+            path=workflow_path,
+            value=command_summary(get_errors),
+        )
+
+    build = run_command([
+        "uip",
+        "rpa",
+        "build",
+        str(UIPATH_PROJECT_DIR),
+        "--output",
+        "json",
+    ])
+    if build["returncode"] != 0:
+        add_issue(
+            issues,
+            "UIPATH_BUILD_FAILED",
+            "UiPath project build failed after workflow generation",
+            path=UIPATH_PROJECT_DIR,
+            value=command_summary(build),
+        )
+
+    return {
+        "get_errors": get_errors,
+        "build": build,
+    }
+
+
 def validate_artifacts(queue_item):
     issues = []
     application_id = queue_item.get("application_id")
@@ -98,10 +232,12 @@ def validate_artifacts(queue_item):
             "Application UI map is missing",
             path=ui_map_path,
         )
-        return workflow_key, issues
+        return workflow_key, issues, {"get_errors": None, "build": None}
 
     ui_map = read_json(ui_map_path)
+    validate_profiles_do_not_store_selectors(ui_map, ui_map_path, issues)
     workflow_name = get_workflow_name(ui_map, operation)
+    expected_workflow_path = None
     if not workflow_name:
         add_issue(
             issues,
@@ -118,7 +254,7 @@ def validate_artifacts(queue_item):
             "Generated workflow folder is missing",
             path=workflow_folder,
         )
-        return workflow_key, issues
+        return workflow_key, issues, {"get_errors": None, "build": None}
 
     if workflow_name:
         expected_workflow_path = workflow_folder / workflow_name
@@ -129,6 +265,8 @@ def validate_artifacts(queue_item):
                 "Expected workflow file is missing",
                 path=expected_workflow_path,
             )
+        else:
+            validate_modern_uia_structure(expected_workflow_path, issues)
 
     for artifact_name in REQUIRED_ARTIFACTS:
         artifact_path = workflow_folder / artifact_name
@@ -142,17 +280,19 @@ def validate_artifacts(queue_item):
 
     runtime_values = get_runtime_values(queue_item)
     scan_for_hardcoded_values(workflow_folder, runtime_values, issues)
+    uipath_validation = validate_uipath_workflow(expected_workflow_path, issues)
 
-    return workflow_key, issues
+    return workflow_key, issues, uipath_validation
 
 
 def main():
     queue_item = read_json(QUEUE_ITEM_PATH)
-    workflow_key, issues = validate_artifacts(queue_item)
+    workflow_key, issues, uipath_validation = validate_artifacts(queue_item)
     validation_result = {
         "workflow_key": workflow_key,
         "validation_status": "FAILED" if issues else "PASSED",
         "issues": issues,
+        "uipath_validation": uipath_validation,
     }
 
     write_json(VALIDATION_RESULT_PATH, validation_result)

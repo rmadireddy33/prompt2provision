@@ -1,0 +1,34 @@
+- Window [ref=w11]:
+  - /process: explorer.exe
+  - /class: Shell_TrayWnd
+- Window "Windows PowerShell" [ref=w17]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Prompt2Provision - File Explorer" [ref=w20]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "npm install" [ref=w22]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window [ref=w28]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;18fb8e9f-1e3e-4a20-bb08-0f0d4852e52a]
+- Window [ref=w84]:
+  - /process: explorer.exe
+  - /class: ApplicationFrameWindow
+  - BrowserTab [ref=b601] [selected]
+- Window "Loading Microsoft Teams" [ref=w86] [minimized]:
+  - /process: teams.exe
+  - /class: Chrome_WidgetWin_1
+- Window "C:\Users\ravin\OneDrive\Documents\UiPathCodedAgentChallenge\Prompt2Provision\app_profiles\broadriver_ui_map.json - Notepad++" [ref=w106] [minimized]:
+  - /process: notepad++.exe
+  - /class: Notepad++
+- Window [ref=w107] [minimized]:
+  - /process: intuitdataprotect.exe
+  - /class: WindowsForms10.Window.8.app.0.34f5582_r7_ad1
+- Window [ref=w110]:
+  - /process: explorer.exe
+  - /class: Shell_SecondaryTrayWnd
+- Window "Program Manager" [ref=w164]:
+  - /process: explorer.exe
+  - /class: Progman

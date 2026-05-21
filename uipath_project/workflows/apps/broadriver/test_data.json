@@ -2,99 +2,8 @@
   "application_id": "broadriver",
   "asset_name": "Prompt2Provision_QueueDataPath",
   "external_queue_json_path_for_this_run": "external_queue_data/pending_queue_item.json",
+  "deployed_asset_queue_path_observed_in_logs": "C:\\Prompt2ProvisionData\\pending_queue_item.json",
   "workflows": {
-    "broadriver.create_user": {
-      "workflow_path": "uipath_project/workflows/apps/broadriver/CreateUser.xaml",
-      "workflow_name": "CreateUser.xaml",
-      "status": "implemented",
-      "arguments": {
-        "in_BaseUrl": "https://broadriver-demo.onrender.com/",
-        "in_Fields": {
-          "user_name": "John Smith",
-          "employee_id": "12345",
-        "email": "john.smith+20260512-1208@test.com",
-          "department": "Finance",
-          "region": "Tampa",
-          "user_type": "Contractor",
-          "requested_group": "AP_APPROVER",
-          "manager_email": "manager@test.com",
-          "duration": "90 days"
-        },
-        "in_EntitlementDetails": {
-          "requested_entitlement": "AP_APPROVER",
-          "ui_value_to_select": "Accounts Payable Approver",
-          "risk_level": "High",
-          "requires_manager_approval": true,
-          "requires_app_owner_approval": true
-        },
-        "in_UserName": "",
-        "in_EmployeeId": "",
-        "in_Email": "",
-        "in_Department": "",
-        "in_Region": "",
-        "in_UserType": "",
-        "in_Group": "",
-        "in_Duration": "",
-        "in_ManagerEmail": ""
-      },
-      "sample_queue_transaction": {
-        "application_id": "broadriver",
-        "operation": "create_user",
-        "workflow_key": "broadriver.create_user",
-        "base_url": "https://broadriver-demo.onrender.com/",
-        "fields": {
-          "user_name": "John Smith",
-          "employee_id": "12345",
-          "email": "john.smith+20260512-1208@test.com",
-          "department": "Finance",
-          "region": "Tampa",
-          "user_type": "Contractor",
-          "requested_group": "AP_APPROVER",
-          "manager_email": "manager@test.com",
-          "duration": "90 days"
-        },
-        "entitlement_details": {
-          "requested_entitlement": "AP_APPROVER",
-          "ui_value_to_select": "Accounts Payable Approver",
-          "risk_level": "High",
-          "requires_manager_approval": true,
-          "requires_app_owner_approval": true
-        }
-      },
-      "expected_success_message": "User created successfully",
-      "validation": {
-        "xaml_get_errors": "No diagnostics found",
-        "project_build": "Success",
-        "package_version": "1.0.15"
-      },
-      "selector_ids": [
-        "nav-admin",
-        "admin-create-user",
-        "input-name",
-        "input-employee-id",
-        "input-email",
-        "input-department",
-        "input-region",
-        "input-user-type",
-        "input-group",
-        "input-duration",
-        "input-manager-approval",
-        "input-manager-email",
-        "btn-create-user",
-        "toast-message"
-      ],
-      "ui_map_steps": [
-        "Open BroadRiver application using base_url",
-        "Click Admin",
-        "Click Create Users",
-        "Enter user name",
-        "Enter email address",
-        "Select group from suggestion dropdown",
-        "Enter manager email",
-        "Click Submit",
-        "Verify success message"
-      ]
-    },
     "broadriver.delete_user": {
       "workflow_path": "uipath_project/workflows/apps/broadriver/DeleteUser.xaml",
       "workflow_name": "DeleteUser.xaml",
@@ -119,16 +28,25 @@
       "expected_success_message": "User deleted successfully",
       "validation": {
         "xaml_get_errors": "No diagnostics found",
-        "project_build": "Success"
+        "project_build": "Success",
+        "package_version": "1.0.39",
+        "deployed_job_state": "Successful"
       },
-      "selector_ids": [
+      "object_repository_reference_ids": {
+        "application_card": "hE-3mc5q3kSnc1nDJYPVPQ/3taf9CyHLkOidvDLIasL3g",
+        "admin_button": "hE-3mc5q3kSnc1nDJYPVPQ/9h9RMgzkAEG-9MlH2FFOGg",
+        "delete_user_button": "hE-3mc5q3kSnc1nDJYPVPQ/IaNikuxDFEm36a8PtPVsTQ",
+        "delete_email_input": "hE-3mc5q3kSnc1nDJYPVPQ/0HWDDK2UJEmKf9gfS14PEQ",
+        "search_button": "hE-3mc5q3kSnc1nDJYPVPQ/O2qIVLuTu0Ko_Mmc8ePbNw",
+        "mark_user_deleted_button": "hE-3mc5q3kSnc1nDJYPVPQ/ufDXXqxxtUmiKrbBvbSiXA",
+        "delete_status_cell": "hE-3mc5q3kSnc1nDJYPVPQ/ijeQa7KhPk-QEJNfPElfAA"
+      },
+      "captured_selector_ids": [
         "nav-admin",
         "nav-delete-user",
-        "input-email",
-        "btn-search-user",
-        "btn-delete-user",
-        "btn-confirm-delete",
-        "toast-message"
+        "input-delete-email-search",
+        "btn-search-delete-user",
+        "btn-delete-user"
       ],
       "ui_map_steps": [
         "Open BroadRiver application using base_url",

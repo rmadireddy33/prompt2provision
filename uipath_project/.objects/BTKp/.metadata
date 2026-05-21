@@ -1,0 +1,12 @@
+﻿{
+  "Name": "BroadRiver Admin Portal_App",
+  "Type": "App",
+  "Id": "BTKpzIsEB0ifNv8OGzAoBg",
+  "Reference": "hE-3mc5q3kSnc1nDJYPVPQ/BTKpzIsEB0ifNv8OGzAoBg",
+  "Created": "2026-05-19T03:49:59.1422316Z",
+  "Updated": "2026-05-19T03:49:59.1422316Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.4.1.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=25.12.1.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

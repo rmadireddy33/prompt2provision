@@ -58,6 +58,25 @@ def is_approved_workflow(registry_entry):
     )
 
 
+def workflow_path_from_ui_map(application_id, operation):
+    ui_map_path = APP_PROFILE_DIR / f"{application_id}_ui_map.json"
+    ui_map = read_json(ui_map_path)
+    operation_map = ui_map.get("operations", {}).get(operation, {})
+    workflow_name = operation_map.get("workflow_name", f"{operation}.xaml")
+    return ROOT_DIR / "uipath_project" / "workflows" / "apps" / application_id / workflow_name
+
+
+def approved_workflow_exists(registry_entry, application_id, operation):
+    if not is_approved_workflow(registry_entry):
+        return False
+
+    registry_path = registry_entry.get("workflow_path")
+    if registry_path and (ROOT_DIR / registry_path).exists():
+        return True
+
+    return workflow_path_from_ui_map(application_id, operation).exists()
+
+
 def build_decision(decision, queue_item, message):
     return {
         "decision": decision,
@@ -121,7 +140,7 @@ Requirements:
 4. Open the application from in_BaseUrl; do not hardcode URLs.
 5. Resolve runtime field values from explicit arguments when provided, otherwise from in_Fields.
 6. Do not hardcode request-specific queue values.
-7. Use strict {application_name} selectors from the application source.
+7. Use strict {application_name} selectors captured from the live browser/UI screen during generation.
 8. Workflow steps:
 {steps_text}
 9. Validate success when the result contains:
@@ -129,6 +148,22 @@ Requirements:
 10. Add meaningful logs before major UI actions.
 11. Keep the workflow reusable for future queue transactions.
 12. Update README.md, test_data.json, and workflow_arguments.json to show {operation} is implemented.
+
+Live UI target capture requirements:
+- Do not read selectors from `app_profiles/*.json` or `app_profiles/*_ui_map.json`; profiles only define operations, fields, steps, and success text.
+- Get selectors from the browser/UI screen itself using UiPath UI Automation capture.
+- Start with a UIA window baseline, then capture every interaction target from the workflow steps screen by screen.
+- Use `uip rpa uia` / target configuration output as the source of truth for `NApplicationCard`, `NClick`, `NTypeInto`, `NGetText`, and related targets.
+- Do not hand-write, guess, or persist selectors in the app profile.
+- Store selector evidence only in the generated UiPath workflow/Object Repository artifacts and optional workflow README notes.
+
+Validation requirements before approval:
+- Create the workflow file at exactly `{workflow_output_path}`.
+- Include every step from the UI map in executable Modern UIAutomation activities; do not leave placeholder-only comments.
+- The generated workflow must include Modern UIAutomation targets captured from the live UI/browser.
+- Run `uip rpa get-errors --file-path "{workflow_output_path}" --project-dir "uipath_project" --output json` and fix every diagnostic.
+- Run `uip rpa build "uipath_project" --output json` and fix build failures before packaging or approval.
+- Treat `get-errors` success alone as insufficient because build catches invalid activity members and enum values.
 
 Queue data and asset handling:
 13. The generated queue transaction JSON should be copied to a local external path outside the UiPath project folder.
@@ -203,7 +238,7 @@ def route(queue_item, registry):
         )
 
     registry_entry = get_registry_entry(registry, workflow_key)
-    if is_approved_workflow(registry_entry):
+    if approved_workflow_exists(registry_entry, application_id, queue_item.get("operation")):
         return build_decision(
             "EXECUTE_WORKFLOW",
             queue_item,

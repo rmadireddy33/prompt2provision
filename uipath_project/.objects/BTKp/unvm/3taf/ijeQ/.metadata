@@ -1,0 +1,14 @@
+﻿{
+  "Name": "Delete Status Cell",
+  "Type": "Element",
+  "TaxonomyType": "Label",
+  "Id": "ijeQa7KhPk-QEJNfPElfAA",
+  "Reference": "hE-3mc5q3kSnc1nDJYPVPQ/ijeQa7KhPk-QEJNfPElfAA",
+  "ParentRef": "hE-3mc5q3kSnc1nDJYPVPQ/3taf9CyHLkOidvDLIasL3g",
+  "Created": "2026-05-19T04:01:49.9800297Z",
+  "Updated": "2026-05-21T03:58:00.0000000Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.4.1.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=25.12.1.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

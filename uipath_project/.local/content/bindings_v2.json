@@ -5,9 +5,13 @@
       "activityDisplayName": "Get Asset",
       "activityId": "GetRobotAsset_1",
       "resource": "asset",
-      "key": "Prompt2Provision_QueueDataPath",
-      "id": "assetPrompt2Provision_QueueDataPathPrompt2Provision_QueueDataPathFalse",
+      "key": "Development.Prompt2Provision_QueueDataPath",
+      "id": "assetDevelopment.Prompt2Provision_QueueDataPathDevelopmentFalsePrompt2Provision_QueueDataPathFalse",
       "value": {
+        "folderPath": {
+          "defaultValue": "Development",
+          "isExpression": false
+        },
         "name": {
           "defaultValue": "Prompt2Provision_QueueDataPath",
           "isExpression": false

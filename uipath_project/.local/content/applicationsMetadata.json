@@ -2,14 +2,14 @@
   "Version": "1.0",
   "Metadata": [
     {
-      "ApplicationType": "Chrome",
+      "ApplicationType": "Edge",
       "ExecutablePath": {
-        "Value": "chrome.exe",
+        "Value": "msedge.exe",
         "IsExpression": false
       },
       "Url": {
-        "Value": "in_BaseUrl",
-        "IsExpression": true
+        "Value": "http://localhost:4000",
+        "IsExpression": false
       },
       "Arguments": null,
       "Version": null

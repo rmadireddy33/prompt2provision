@@ -1,161 +1,6 @@
 {
   "application_id": "broadriver",
   "workflows": {
-    "broadriver.create_user": {
-      "workflow_key": "broadriver.create_user",
-      "workflow_name": "CreateUser.xaml",
-      "operation": "create_user",
-      "status": "implemented",
-      "source_ui_map": "app_profiles/broadriver_ui_map.json",
-      "arguments": [
-        {
-          "name": "in_BaseUrl",
-          "direction": "In",
-          "type": "String",
-          "required": true,
-          "source": "queue_item.base_url"
-        },
-        {
-          "name": "in_Fields",
-          "direction": "In",
-          "type": "Newtonsoft.Json.Linq.JObject",
-          "required": true,
-          "source": "queue_item.fields"
-        },
-        {
-          "name": "in_EntitlementDetails",
-          "direction": "In",
-          "type": "Newtonsoft.Json.Linq.JObject",
-          "required": false,
-          "source": "queue_item.entitlement_details"
-        },
-        {
-          "name": "in_UserName",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.user_name"
-        },
-        {
-          "name": "in_Email",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.email"
-        },
-        {
-          "name": "in_EmployeeId",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.employee_id"
-        },
-        {
-          "name": "in_Department",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.department"
-        },
-        {
-          "name": "in_Region",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.region"
-        },
-        {
-          "name": "in_UserType",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.user_type"
-        },
-        {
-          "name": "in_Group",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.requested_group"
-        },
-        {
-          "name": "in_Duration",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.duration"
-        },
-        {
-          "name": "in_ManagerEmail",
-          "direction": "In",
-          "type": "String",
-          "required": false,
-          "source": "explicit override; falls back to queue_item.fields.manager_email"
-        }
-      ],
-      "field_dictionary_keys": [
-        "user_name",
-        "employee_id",
-        "email",
-        "department",
-        "region",
-        "user_type",
-        "requested_group",
-        "duration",
-        "manager_email"
-      ],
-      "explicit_argument_precedence": [
-        "in_UserName",
-        "in_EmployeeId",
-        "in_Email",
-        "in_Department",
-        "in_Region",
-        "in_UserType",
-        "in_Group",
-        "in_Duration",
-        "in_ManagerEmail",
-        "in_Fields"
-      ],
-      "selector_ids": [
-        "nav-admin",
-        "admin-create-user",
-        "input-name",
-        "input-employee-id",
-        "input-email",
-        "input-department",
-        "input-region",
-        "input-user-type",
-        "input-group",
-        "input-duration",
-        "input-manager-approval",
-        "input-manager-email",
-        "btn-create-user",
-        "toast-message"
-      ],
-      "navigation_steps": [
-        "Open BroadRiver application using base_url",
-        "Click Admin",
-        "Click Create Users",
-        "Enter user name",
-        "Enter email address",
-        "Select group from suggestion dropdown",
-        "Enter manager email",
-        "Click Submit",
-        "Verify success message"
-      ],
-      "success_validation": "User created successfully",
-      "asset_handling": {
-        "queue_path_asset_name": "Prompt2Provision_QueueDataPath",
-        "external_queue_json_path_for_this_run": "external_queue_data/pending_queue_item.json",
-        "main_reads_asset": true,
-        "main_hardcoded_queue_path": false
-      },
-      "validation": {
-        "xaml_get_errors": "No diagnostics found",
-        "project_build": "Success",
-        "package_version": "1.0.15"
-      }
-    },
     "broadriver.delete_user": {
       "workflow_key": "broadriver.delete_user",
       "workflow_name": "DeleteUser.xaml",
@@ -182,7 +27,7 @@
           "direction": "In",
           "type": "Newtonsoft.Json.Linq.JObject",
           "required": false,
-          "source": "queue_item.entitlement_details"
+          "source": "router compatibility"
         },
         {
           "name": "in_Email",
@@ -190,6 +35,13 @@
           "type": "String",
           "required": false,
           "source": "explicit override; falls back to queue_item.fields.email"
+        },
+        {
+          "name": "out_Result",
+          "direction": "Out",
+          "type": "String",
+          "required": false,
+          "source": "delete operation result"
         }
       ],
       "field_dictionary_keys": [
@@ -199,14 +51,14 @@
         "in_Email",
         "in_Fields"
       ],
-      "selector_ids": [
-        "nav-admin",
-        "nav-delete-user",
-        "input-email",
-        "btn-search-user",
-        "btn-delete-user",
-        "btn-confirm-delete",
-        "toast-message"
+      "object_repository_reference_ids": [
+        "hE-3mc5q3kSnc1nDJYPVPQ/3taf9CyHLkOidvDLIasL3g",
+        "hE-3mc5q3kSnc1nDJYPVPQ/9h9RMgzkAEG-9MlH2FFOGg",
+        "hE-3mc5q3kSnc1nDJYPVPQ/IaNikuxDFEm36a8PtPVsTQ",
+        "hE-3mc5q3kSnc1nDJYPVPQ/0HWDDK2UJEmKf9gfS14PEQ",
+        "hE-3mc5q3kSnc1nDJYPVPQ/O2qIVLuTu0Ko_Mmc8ePbNw",
+        "hE-3mc5q3kSnc1nDJYPVPQ/ufDXXqxxtUmiKrbBvbSiXA",
+        "hE-3mc5q3kSnc1nDJYPVPQ/ijeQa7KhPk-QEJNfPElfAA"
       ],
       "navigation_steps": [
         "Open BroadRiver application using base_url",
@@ -227,7 +79,9 @@
       },
       "validation": {
         "xaml_get_errors": "No diagnostics found",
-        "project_build": "Success"
+        "project_build": "Success",
+        "package_version": "1.0.39",
+        "deployed_job_state": "Successful"
       }
     }
   }

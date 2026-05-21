@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ObjectRepositoryTargetData ContentHash="gO6rjeL19Ua2PX9oiA8gUA" xmlns="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ObjectRepositoryTargetData.Data>
+    <TargetAnchorable x:Key="TargetAnchorable" DesignTimeRectangle="1645, 466, 76, 63" DesignTimeScaleFactor="1" ElementType="Text" ElementVisibilityArgument="Interactive" FullSelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl tableCol='12' tableRow='2' tag='TD' /&gt;" Guid="6235ab3e-989f-4981-bc12-3150912bf637" ScopeSelectorArgument="&lt;html app='msedge.exe' title='BroadRiver*' url='http://localhost:4000/*' /&gt;" SearchSteps="Selector" Version="V6">
+      <imageRef attrName="InformativeScreenshot" originalValue="1b652cce655684faee1999924091a5d1.jpg" xmlns="">07zNR1DQszUKkVnRW0g9abg</imageRef>
+    </TargetAnchorable>
+  </ObjectRepositoryTargetData.Data>
+</ObjectRepositoryTargetData>

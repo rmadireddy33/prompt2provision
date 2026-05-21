@@ -1,0 +1,70 @@
+- Window "Screen sharing meeting controls" [ref=w10]:
+  - /process: zoom.exe
+  - /class: ZPFloatToolbarClass
+- Window "Zoom Workplace" [ref=w26]:
+  - /process: zoom.exe
+  - /class: ZPFloatVideoWndClass
+- Window "Video layouts" [ref=w27]:
+  - /process: zoom.exe
+  - /class: ZPFloatControlPanelMgrClass
+- Window "Annotation Entry Point" [ref=w31]:
+  - /process: zoom.exe
+  - /class: ZPAnnotateEntryPointClass
+- Window [ref=w45]:
+  - /process: explorer.exe
+  - /class: Shell_SecondaryTrayWnd
+- Window "Windows PowerShell" [ref=w72]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Jobs - UiPath Orchestrator - Google Chrome" [ref=w73]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "Jobs - UiPath Orchestrator" [ref=b1082] [selected]:
+    - /url: https://cloud.uipath.com/rmadireddy33/rmadireddy33/orchestrator_/jobs(sidepanel:sidepanel/jobs/9862f92a-8775-4070-afef-ce46b66c7db1/logs)?tid=47187&fid=231056&index=0&size=25&state=GYSwNgLgpgTgzgHwMYygQwiA9gOwCogC2UCYaARlGAgCYZQC0MaOA5owA4hIDWsDZOBAYAmACwMAFlgCu8BMzYkhaGBAQiADCIBsDTQFYGARgCceTZoBcBgMxXjxgHS2A7K%2F1irlhFBw0NbT1DUU0LazsHZzcPTS8fOCw1BFAqAJoQVCRMXFooOCQAPWKAEk0EEuMKkQRbBDEKgwQdBFcEAA4AXW6EUwqAQQQqgCEEAGFuoA
+- Window "BroadRiver Admin Portal - Personal - Microsoft​ Edge" [ref=w74]:
+  - /process: msedge.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "BroadRiver Admin Portal" [ref=b1083] [selected]:
+    - /url: http://localhost:4000/
+- Window "New.png" [ref=w79]:
+  - /process: photos.exe
+  - /class: WinUIDesktopWin32WindowClass
+- Window "Zoom Workplace" [ref=w127]:
+  - /process: zoom.exe
+  - /class: ZPPTMainFrmWndClassEx
+- Window "2026-05-19 00.24.29 Ravindra's Zoom Meeting - File Explorer" [ref=w130]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window [ref=w140]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;291d062c-4458-45b7-a292-d15d68a05638]
+- Window [ref=w151]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;fa20215d-c16c-410d-8462-cd2b107e7144]
+- Window "UiPath Assistant" [ref=w154]:
+  - /process: uipath.assistant.exe
+  - /class: Chrome_WidgetWin_1
+- Window "PlaceholderWindow" [ref=w164] [minimized]:
+  - /process: uipath.studio.project.exe
+  - /class: HwndWrapper[UiPath.Studio.Project;;e998aa8a-f8e8-4e6a-ab2b-66c926c3e4c1]
+- Window "C:\Users\ravin\OneDrive\Documents\UiPathCodedAgentChallenge\Prompt2Provision\registry\workflow_registry.json - Notepad++" [ref=w208]:
+  - /process: notepad++.exe
+  - /class: Notepad++
+- Window "Prompt2ProvisionUiPath - UiPath Studio Community" [ref=w215] [minimized]:
+  - /process: uipath.studio.exe
+  - /class: HwndWrapper[UiPath.Studio;;ea536db9-1ba0-4102-bba2-7b1d259deddd]
+- Window "Prompt2ProvisionUiPath" [ref=w216] [minimized]:
+  - /process: uipath.studio.project.exe
+  - /class: HwndWrapper[UiPath.Studio.Project;;0b6ab884-11b2-4db3-a944-aeab6ca28fb1]
+- Window "npm install" [ref=w414] [minimized]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Microsoft Teams" [ref=w416] [minimized]:
+  - /process: teams.exe
+  - /class: Chrome_WidgetWin_1
+- Window [ref=w417]:
+  - /process: explorer.exe
+  - /class: Shell_TrayWnd
+- Window "Program Manager" [ref=w418]:
+  - /process: explorer.exe
+  - /class: Progman

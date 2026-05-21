@@ -1,10 +1,34 @@
 # Prompt2Provision UiPath Execution Layer
 
-`uipath_project/Main.xaml` is the generic queue router. It reads the `Prompt2Provision_QueueDataPath` Orchestrator Text asset, reads the queue transaction JSON from that external local path, deserializes it into a `JObject`, and extracts `application_id`, `operation`, `base_url`, `fields`, and optional `entitlement_details`.
+## Introduction
 
-The generated transaction JSON for this run was copied outside the UiPath project folder to:
+Prompt2Provision is an autonomous UiPath execution layer for disconnected application lifecycle management. It supports joiner, mover, and leaver provisioning requests as well as aggregation-style operations for applications that do not have direct API or connector coverage. It reads a plain-language lifecycle request, converts it into a structured queue transaction, routes it to an approved reusable UiPath workflow, and executes the workflow through the `Prompt2ProvisionUiPath` process.
 
-`C:\Users\ravin\OneDrive\Documents\UiPathCodedAgentChallenge\Prompt2Provision\external_queue_data\pending_queue_item.json`
+The current workspace includes the BroadRiver demo application. BroadRiver supports disconnected application lifecycle operations such as `create_user`, `modify_user`, and `delete_user`, and the same framework can be extended to account, entitlement, and access aggregation use cases. Request-specific data is passed through queue JSON and workflow arguments, so workflows remain reusable and do not hardcode user values.
+
+Demo videos are available here:
+
+```text
+https://drive.google.com/drive/folders/1B60PxIdps5i3CE0bhh7WmNC7m4eBTNV4?usp=sharing
+```
+
+## Solution Details
+
+The solution is designed for disconnected apps where identity lifecycle work must be performed through a UI, exported files, or other non-API surfaces. It has two main parts:
+
+- Python pipeline agents in `agents/`
+- A UiPath project in `uipath_project/`
+
+The pipeline flow is:
+
+1. `agents/agent1_requirement_analysis.py` reads `data/jml_request.txt`, detects the application and operation from `app_profiles`, validates required fields, resolves entitlement metadata when applicable, and writes the queue transaction.
+2. `agents/agent4_router.py` checks `registry/workflow_registry.json` to decide whether an approved workflow already exists.
+3. If an approved workflow exists, the pipeline executes it through UiPath.
+4. If a workflow does not exist, the pipeline prepares a builder prompt and validation flow for creating one.
+5. `agents/agent3_validator.py` validates generated workflow artifacts, checks for hardcoded runtime values, runs `uip rpa get-errors`, and builds the UiPath project.
+6. `agents/agent5_registry_update.py` registers approved workflows for future reuse.
+
+`uipath_project/Main.xaml` is the generic UiPath router. It reads the `Prompt2Provision_QueueDataPath` Orchestrator Text asset, loads the queue transaction JSON from that file path, extracts `application_id`, `operation`, `base_url`, `fields`, and optional `entitlement_details`, then invokes the matching child workflow.
 
 Workflow selection is dynamic:
 
@@ -12,81 +36,177 @@ Workflow selection is dynamic:
 - `modify_user` -> `ModifyUser.xaml`
 - `delete_user` -> `DeleteUser.xaml`
 
-For `broadriver.create_user`, `Main.xaml` resolves `workflows/apps/broadriver/CreateUser.xaml` and passes `in_BaseUrl`, `in_Fields`, and `in_EntitlementDetails`. The child workflow can also accept explicit field arguments such as `in_UserName`, `in_EmployeeId`, `in_Email`, `in_Department`, `in_Region`, `in_UserType`, `in_Group`, `in_Duration`, and `in_ManagerEmail`; when supplied directly, those values take precedence over `in_Fields`.
+BroadRiver assets are stored here:
 
-## BroadRiver Create User
+- Application profile: `app_profiles/broadriver.json`
+- UI map: `app_profiles/broadriver_ui_map.json`
+- Workflows: `uipath_project/workflows/apps/broadriver/`
+- Approved workflow registry: `registry/workflow_registry.json`
 
-`uipath_project/workflows/apps/broadriver/CreateUser.xaml` implements the BroadRiver create-user operation with Modern UIAutomation:
+Queue transaction outputs are written to:
 
-- Opens BroadRiver using `in_BaseUrl`
-- Clicks Admin
-- Clicks Create Users
-- Enters user name
-- Enters email address
-- Selects the group from the suggestion dropdown
-- Enters manager email
-- Clicks Submit
-- Reads `toast-message`
-- Validates the success text contains `User created successfully`
+- `queues/pending_queue_item.json`
+- `outputs/automation_contract.json`
+- `C:\Prompt2ProvisionData\pending_queue_item.json`
 
-The workflow uses strict BroadRiver selectors from the app operation surface: `nav-admin`, `admin-create-user`, `input-name`, `input-employee-id`, `input-email`, `input-department`, `input-region`, `input-user-type`, `input-group`, `input-duration`, `input-manager-approval`, `input-manager-email`, `btn-create-user`, and `toast-message`. Request-specific queue values are not hardcoded in XAML.
+The UiPath process reads the external queue path from the Orchestrator Text asset named `Prompt2Provision_QueueDataPath`.
 
-## BroadRiver Delete User
+## Prerequisites
 
-`uipath_project/workflows/apps/broadriver/DeleteUser.xaml` implements the BroadRiver delete-user operation with Modern UIAutomation:
+Install and configure these before running:
 
-- Opens BroadRiver using `in_BaseUrl`
-- Clicks Admin
-- Clicks Delete User
-- Searches by email
-- Clicks Delete
-- Confirms delete using the current BroadRiver delete action
-- Reads `toast-message`
-- Validates the success text contains `User deleted successfully`
+- Python 3
+- UiPath Studio or Robot on the machine that will run the automation
+- UiPath CLI available as `uip`
+- UiPath Orchestrator access
+- A configured Orchestrator folder, currently expected to be `Development`
+- The BroadRiver demo application running and reachable at the `base_url` in `app_profiles/broadriver.json`
 
-The workflow uses strict BroadRiver selectors from the app operation surface: `nav-admin`, `admin-delete-user`, `input-email`, `btn-delete-user`, and `toast-message`. Request-specific queue values are not hardcoded in XAML.
+The current BroadRiver profile uses:
 
-## Deployment
+```text
+http://localhost:4000/
+```
 
-Validation and packaging completed for create-user:
+## One-Time Setup
 
-- `uip rpa get-errors` passed for `CreateUser.xaml`
-- `uip rpa get-errors` passed for `Main.xaml`
-- `uip rpa build` succeeded
-- Package created: `outputs/packages/Prompt2ProvisionUiPath.1.0.15.nupkg`
-- Package `Prompt2ProvisionUiPath` version `1.0.15` is present in the Orchestrator tenant feed
-- The stable process `Prompt2ProvisionUiPath` was updated only in the `Development` Orchestrator folder. The folder was resolved dynamically by path/name and no folder IDs or GUIDs are hardcoded in the project.
+1. Sign in to UiPath CLI.
 
-Required Orchestrator setup:
+   ```powershell
+   uip login
+   ```
 
-1. Create or update a Text asset named `Prompt2Provision_QueueDataPath`.
-2. Set its value to the external queue JSON path above, or another local path available on the robot machine.
-3. Ensure the target folder has a configured runtime template.
-4. Launch the process from UiPath Assistant or Orchestrator.
+2. Create or update the Orchestrator Text asset.
 
-Notes from this environment:
+   Asset name:
 
-- The resource/asset CLI extension was unavailable and could not be installed because `@uipath/resource-tool` fetch failed.
-- Direct REST calls from the shell could not connect to Orchestrator, but the existing asset was verified through robot logs.
-- The deployed `Development` run used the asset value `C:\Prompt2ProvisionData\pending_queue_item.json`.
-- The first run attempt with `--runtime-type Development` failed because no Development runtimes are configured on folder templates; rerunning with the folder default launched as Unattended on `LAPTOP-PPQDF7UL`.
-- Deployed execution reached the BroadRiver create-user UI, filled the form, clicked Submit, and read `toast-message`.
-- The app returned `A user with this email already exists` for the asset-backed queue email. Selector/synchronization repair stopped because the remaining failure is business data, not UI automation. The repo external queue copy has a unique test email, but this sandbox could not write to `C:\Prompt2ProvisionData\pending_queue_item.json`.
+   ```text
+   Prompt2Provision_QueueDataPath
+   ```
 
-Execution details are saved in `outputs/execution_test_result.json`; repair history is saved in `outputs/repair_history.json`.
+   Asset value:
 
-## Repair Notes - 2026-05-12
+   ```text
+   C:\Prompt2ProvisionData\pending_queue_item.json
+   ```
 
-- Repaired `broadriver.create_user` after Orchestrator job `c77652c7-738f-4657-af8b-75db82932b21` faulted at `NClick "Click Admin"` on the deployed stale selector `<webctrl id='nav-adn' tag='BUTTON' />`.
-- Reconfirmed `app_profiles/broadriver.json` and `app_profiles/broadriver_ui_map.json`; they define operation fields and step labels only, with no stale `nav-adn` selector to update.
-- Kept `CreateUser.xaml` on the current Admin selector `<webctrl id='nav-admin' tag='BUTTON' />`, with `NCheckState` waiting for the Admin button before click and for `admin-create-user` after navigation.
-- Removed the fixed `DelayBefore` from `NClick "Click Admin"` so synchronization is handled by Modern UIAutomation waits and target timeouts instead of a static sleep.
-- Repaired `broadriver.create_user` after Orchestrator job `0fe05730-4657-4531-9938-4eeadf0efcb4` faulted at `NClick "Click Admin"` due to the stale strict selector `<webctrl id='nav-adn' tag='BUTTON' />` in the deployed package.
-- Confirmed the active workflow file targets the current BroadRiver Admin selector `<webctrl id='nav-admin' tag='BUTTON' />`; no runtime request values were hardcoded.
-- Added Modern UIAutomation `Check App State` waits before clicking Admin and before clicking Create Users, both waiting for visible target elements with `WaitForReady=Interactive`.
-- Widened the BroadRiver browser scope selector from the exact title `BroadRiver Admin Portal` to `BroadRiver*` throughout `CreateUser.xaml` so navigation does not break child target resolution when the page title varies.
-- Repaired `broadriver.create_user` after Orchestrator job `ffe4f947-df87-493e-a8ca-9fc5135857b6` faulted at `NClick "Click Admin"` due to strict selector `<webctrl id='nav-adn' tag='BUTTON' />`.
-- Updated `uipath_project/workflows/apps/broadriver/CreateUser.xaml` to target the current BroadRiver Admin button selector `<webctrl id='nav-admin' tag='BUTTON' />`, matching the nearest runtime selector and the BroadRiver workflow documentation.
-- Aligned the Employee ID field selector with the app operation metadata by using `<webctrl id='input-employee-id' tag='INPUT' />`.
-- Kept runtime request values dynamic through workflow arguments and `in_Fields` / `in_EntitlementDetails`; no queue-specific user data was hardcoded.
-- The workflow remains on Modern UIAutomation (`NApplicationCard`, `NClick`, `NTypeInto`, `NSelectItem`, `NGetText`) with UIA target timeouts and `WaitForReady=Interactive` used for synchronization.
+3. Confirm the `Development` Orchestrator folder has a runtime template that can run the process.
+
+4. Confirm the stable package/process name in Orchestrator is:
+
+   ```text
+   Prompt2ProvisionUiPath
+   ```
+
+## How to Run
+
+1. Update the request file.
+
+   Edit `data/jml_request.txt` with the disconnected app lifecycle request to process. This can be a JML provisioning request or an aggregation-related request. The request should include the application name, operation, and all required fields for that operation.
+
+   Example fields for BroadRiver `create_user` provisioning:
+
+   ```text
+   Application: BroadRiver
+   Operation: create user
+   User Name: Jane Smith
+   Employee ID: E12345
+   Email: jane.smith@example.com
+   Department: Finance
+   Region: North America
+   User Type: Employee
+   Requested Group: AP_VIEWER
+   Manager Email: manager@example.com
+   Duration: Permanent
+   ```
+
+2. Run the autonomous pipeline from the repository root.
+
+   ```powershell
+   py -3 run_autonomous_pipeline.py
+   ```
+
+3. Review generated outputs.
+
+   The main files to check are:
+
+   - `outputs/automation_contract.json`
+   - `queues/pending_queue_item.json`
+   - `outputs/routing_decision.json`
+   - `outputs/execution_result.json`
+   - `outputs/execution_test_result.json`
+
+4. If the router finds an approved workflow, the pipeline executes the workflow.
+
+   The registry entry must exist in `registry/workflow_registry.json` and have `status` set to `approved`.
+
+   For aggregation scenarios, the approved workflow should write its extracted account, entitlement, or assignment data to the agreed output artifact for downstream identity processing.
+
+5. If the router returns `BUILD_WORKFLOW`, create and validate the missing workflow.
+
+   The generated builder prompt is written to:
+
+   ```text
+   prompts/agent2_codex_builder_prompt.txt
+   ```
+
+   The workflow must be added under:
+
+   ```text
+   uipath_project/workflows/apps/<application_id>/
+   ```
+
+   After the workflow is created, rerun the pipeline so validation, approval, registry update, deployment, and execution can continue.
+
+## Run the UiPath Project Directly
+
+Use this path when you only want to run the existing UiPath package/process with the latest queue JSON.
+
+1. Ensure `C:\Prompt2ProvisionData\pending_queue_item.json` exists.
+2. Ensure the Orchestrator asset `Prompt2Provision_QueueDataPath` points to that file.
+3. Run the `Prompt2ProvisionUiPath` process from UiPath Assistant or Orchestrator.
+4. Check the process output and logs in Orchestrator.
+
+## How to Onboard New Application
+
+1. Add an application profile at `app_profiles/<application_id>.json`.
+
+   Include `application_id`, `application_name`, optional `aliases`, `base_url`, supported `operations`, operation detection `phrases`, `required_fields`, and any `entitlements`. Use `app_profiles/broadriver.json` as the reference shape.
+
+2. Add a UI map at `app_profiles/<application_id>_ui_map.json`.
+
+   Define each operation's `workflow_name`, ordered business steps, and success validation text. Do not store selectors in this file. Selectors must be captured from the live browser or desktop application during workflow creation and stored in the generated XAML/Object Repository artifacts.
+
+3. Add a request in `data/jml_request.txt`.
+
+   The request must contain the application name or alias, an operation phrase, and all required fields from the application profile. For aggregation use cases, fields may describe the aggregation scope, source screen/report, output format, or target dataset instead of user provisioning attributes.
+
+4. Run the pipeline.
+
+   ```powershell
+   py -3 run_autonomous_pipeline.py
+   ```
+
+5. Create the missing workflow when the router returns `BUILD_WORKFLOW`.
+
+   Use `prompts/agent2_codex_builder_prompt.txt` as the implementation prompt. The workflow should be created under `uipath_project/workflows/apps/<application_id>/` and should include:
+
+   - The operation XAML file
+   - `README.md`
+   - `test_data.json`
+   - `workflow_arguments.json`
+
+6. Validate the workflow.
+
+   ```powershell
+   uip rpa get-errors --file-path "uipath_project/workflows/apps/<application_id>/<workflow_name>.xaml" --project-dir "uipath_project" --output json
+   uip rpa build "uipath_project" --output json
+   ```
+
+7. Approve and register the workflow.
+
+   Once validation passes and the workflow is approved, add or update the entry in `registry/workflow_registry.json` so future requests for the same `<application_id>.<operation>` use the approved reusable workflow.
+
+8. Package and deploy the UiPath project.
+
+   Use the stable process name `Prompt2ProvisionUiPath` and deploy/update it in the `Development` Orchestrator folder. Future queue transactions can then route lifecycle and aggregation work for the new disconnected application automatically.

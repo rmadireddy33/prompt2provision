@@ -1,0 +1,13 @@
+{
+  "ActivityType": "CheckState",
+  "TargetVersion": "V6",
+  "SelectorStrategy": "Default",
+  "WindowSelector": "<html app='msedge.exe' title='BroadRiver Admin Portal' url='http://localhost:4000/*' />",
+  "WindowNodeId": "b1224",
+  "PartialSelector": "<webctrl id='nav-admin' tag='BUTTON'/>",
+  "ElementNodeId": "e22",
+  "SemanticSelector": null,
+  "Name": "Admin Navigation",
+  "Description": "Admin navigation button in BroadRiver sidebar",
+  "ReferenceId": null
+}

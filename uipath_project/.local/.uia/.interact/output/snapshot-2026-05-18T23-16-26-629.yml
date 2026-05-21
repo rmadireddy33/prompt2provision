@@ -1,0 +1,74 @@
+- Window [ref=w10]:
+  - /process: explorer.exe
+  - /class: Shell_TrayWnd
+- Window [ref=w15]:
+  - /process: explorer.exe
+  - /class: Shell_SecondaryTrayWnd
+- Window "Windows PowerShell" [ref=w19]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "BroadRiver Admin Portal - Google Chrome" [ref=w21]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "BroadRiver Admin Portal" [ref=b938] [selected]:
+    - /url: http://localhost:4000/
+- Window "*new 2 - Notepad++" [ref=w25]:
+  - /process: notepad++.exe
+  - /class: Notepad++
+- Window "Best Architecture Diagrams - Google Chrome" [ref=w28]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "Processes - UiPath Orchestrator" [ref=b933]:
+    - /url: https://cloud.uipath.com/rmadireddy33/rmadireddy33/orchestrator_/processes?tid=47187&fid=231056&index=0&size=25&state=M4ewTgLgPgZglgUwDYBMoDsCGBbBUVxgIDGEcI6UmwxAevQCQAMUDAjFAExQDMUALAF1BQA%3D
+  - BrowserTab "All - Activity - ravindra.reddy33 - UiPath Community Forum" [ref=b934]:
+    - /url: https://forum.uipath.com/u/ravindra.reddy33/activity
+  - BrowserTab "rmadireddy33/prompt2provision" [ref=b935]:
+    - /url: https://github.com/rmadireddy33/prompt2provision
+  - BrowserTab "UiPath Challenge Strategy" [ref=b936]:
+    - /url: https://chatgpt.com/c/69fd5ed9-071c-83ea-bf93-b5e4fe843a51
+  - BrowserTab "Best Architecture Diagrams" [ref=b937] [selected]:
+    - /url: https://chatgpt.com/c/6a05451e-89b8-83ea-9ff3-d3ff026b9b93
+- Window [ref=w35]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;e5eb844b-2743-4c2e-8855-4786089744fa]
+- Window "UiPath Assistant" [ref=w39]:
+  - /process: uipath.assistant.exe
+  - /class: Chrome_WidgetWin_1
+- Window "This PC - File Explorer" [ref=w45]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "npm install" [ref=w47]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Program Manager" [ref=w48]:
+  - /process: explorer.exe
+  - /class: Progman
+- Window "PowerPoint" [ref=w56] [minimized]:
+  - /process: powerpnt.exe
+  - /class: PPTFrameClass
+- Window [ref=w83]:
+  - /process: uipath.uiautomation.exe
+  - /class: WindowsForms10.Window.8.app.0.2cf4309_r3_ad1
+- Window "PlaceholderWindow" [ref=w118] [minimized]:
+  - /process: uipath.studio.project.exe
+  - /class: HwndWrapper[UiPath.Studio.Project;;52c80df1-5d95-4fd2-b8b6-73042161dd8e]
+- Window [ref=w137]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;c0bfa4b0-dece-455c-83ef-8a3645df58ed]
+- Window "McAfee Security Scan Plus" [ref=w263] [minimized]:
+  - /class: MSSP
+- Window "Prompt2Provision_Challenge_Submission_Updated_Final.docx  -  Protected View  -  Last saved by user - Word" [ref=w264] [minimized]:
+  - /process: winword.exe
+  - /class: OpusApp
+- Window "*Hello everyone. - Notepad" [ref=w265] [minimized]:
+  - /process: notepad.exe
+  - /class: Notepad
+- Window "Prompt2ProvisionUiPath - UiPath Studio Community" [ref=w267] [minimized]:
+  - /process: uipath.studio.exe
+  - /class: HwndWrapper[UiPath.Studio;;9f3b99c0-a5e3-4b23-be4e-a027f40518ce]
+- Window "Prompt2ProvisionUiPath" [ref=w268] [minimized]:
+  - /process: uipath.studio.project.exe
+  - /class: HwndWrapper[UiPath.Studio.Project;;5520c72d-8878-4851-a0e0-be9dab820743]
+- Window [ref=w269] [minimized]:
+  - /process: intuitdataprotect.exe
+  - /class: WindowsForms10.Window.8.app.0.34f5582_r7_ad1

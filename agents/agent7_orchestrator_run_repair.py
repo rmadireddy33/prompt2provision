@@ -1,8 +1,10 @@
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -65,7 +67,16 @@ def resolve_command(command):
 
 
 def read_json(path):
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+def read_text_any_encoding(path):
+    for encoding in ("utf-8", "utf-16"):
+        try:
+            return path.read_text(encoding=encoding)
+        except UnicodeError:
+            continue
+    return None
 
 
 def write_json(path, data):
@@ -167,6 +178,170 @@ def job_error_text(job_result):
     )
 
 
+def registry_workflow_path(workflow_key):
+    registry = read_json(REGISTRY_PATH)
+    return registry.get(workflow_key, {}).get("workflow_path")
+
+
+def workflow_object_references(workflow_path):
+    if not workflow_path:
+        return []
+
+    path = ROOT_DIR / workflow_path
+    if not path.exists():
+        return []
+
+    text = path.read_text(encoding="utf-8")
+    references = re.findall(r'Reference="([^"]+)"', text)
+    return sorted(set(references))
+
+
+def object_repository_files_for_references(references):
+    objects_dir = PROJECT_PATH / ".objects"
+    if not references or not objects_dir.exists():
+        return []
+
+    matched_files = []
+    reference_set = set(references)
+    for path in objects_dir.rglob("*"):
+        if not path.is_file():
+            continue
+
+        content = None
+        content = read_text_any_encoding(path)
+
+        if content and any(reference in content for reference in reference_set):
+            matched_files.append(path)
+            if path.name == ".metadata":
+                data_dir = path.parent / ".data"
+                if data_dir.exists():
+                    matched_files.extend(
+                        sibling
+                        for sibling in data_dir.rglob("*")
+                        if sibling.is_file()
+                    )
+
+    return sorted(
+        str(path.relative_to(ROOT_DIR)).replace("\\", "/")
+        for path in set(matched_files)
+    )
+
+
+def parse_xml_attributes(attribute_text):
+    return dict(re.findall(r'([A-Za-z_:][\w:.-]*)="([^"]*)"', attribute_text))
+
+
+def referenced_workflow_targets(workflow_path):
+    if not workflow_path:
+        return []
+
+    path = ROOT_DIR / workflow_path
+    if not path.exists():
+        return []
+
+    text = path.read_text(encoding="utf-8")
+    targets = []
+    for match in re.finditer(r"<uix:(TargetAnchorable|TargetApp)\s+([^>]*)/>", text):
+        target_type, attribute_text = match.groups()
+        attributes = parse_xml_attributes(attribute_text)
+        reference = attributes.get("Reference")
+        if reference:
+            targets.append({
+                "type": target_type,
+                "reference": reference,
+                "attributes": attributes,
+            })
+
+    return targets
+
+
+def object_repository_reference_map():
+    objects_dir = PROJECT_PATH / ".objects"
+    if not objects_dir.exists():
+        return {}
+
+    references = {}
+    for metadata_path in objects_dir.rglob("*"):
+        if not metadata_path.is_file() or metadata_path.name != ".metadata":
+            continue
+
+        try:
+            metadata = read_json(metadata_path)
+        except (json.JSONDecodeError, UnicodeError):
+            continue
+
+        reference = metadata.get("Reference")
+        if reference:
+            references[reference] = {
+                "metadata_path": metadata_path,
+                "object_dir": metadata_path.parent,
+                "type": metadata.get("Type"),
+            }
+
+    return references
+
+
+def object_repository_content_path(object_dir, target_type):
+    if target_type == "TargetApp":
+        return object_dir / ".data" / "ObjectRepositoryScreenData" / ".content"
+
+    return object_dir / ".data" / "ObjectRepositoryTargetData" / ".content"
+
+
+def object_repository_target_attributes(content, target_type):
+    if not content:
+        return {}
+
+    match = re.search(rf"<{target_type}\s+([^>]*)>", content)
+    if not match:
+        return {}
+
+    return parse_xml_attributes(match.group(1))
+
+
+def validate_object_repository_consistency(workflow_path):
+    targets = referenced_workflow_targets(workflow_path)
+    if not targets:
+        return []
+
+    reference_map = object_repository_reference_map()
+    issues = []
+    comparable_attributes = {
+        "TargetApp": ("Selector", "Url", "BrowserType"),
+        "TargetAnchorable": ("FullSelectorArgument", "ScopeSelectorArgument", "SearchSteps", "Version"),
+    }
+
+    for target in targets:
+        reference = target["reference"]
+        repository_entry = reference_map.get(reference)
+        if not repository_entry:
+            issues.append(f"{reference}: missing Object Repository metadata entry")
+            continue
+
+        content_path = object_repository_content_path(repository_entry["object_dir"], target["type"])
+        if not content_path.exists():
+            issues.append(
+                f"{reference}: missing Object Repository content file {content_path.relative_to(ROOT_DIR)}"
+            )
+            continue
+
+        content = read_text_any_encoding(content_path)
+        repository_attributes = object_repository_target_attributes(content, target["type"])
+        if not repository_attributes:
+            issues.append(f"{reference}: could not read {target['type']} attributes from Object Repository content")
+            continue
+
+        for attribute in comparable_attributes[target["type"]]:
+            workflow_value = target["attributes"].get(attribute)
+            repository_value = repository_attributes.get(attribute)
+            if workflow_value and repository_value != workflow_value:
+                issues.append(
+                    f"{reference}: Object Repository {attribute} does not match workflow target"
+                )
+
+    return issues
+
+
 def target_folder_path():
     return os.environ.get("PROMPT2PROVISION_FOLDER_PATH", DEFAULT_ORCHESTRATOR_FOLDER_PATH)
 
@@ -251,10 +426,17 @@ def list_package_versions(package_key):
         for package in packages:
             if not isinstance(package, dict):
                 continue
-            package_id = package.get("Id") or package.get("Title") or package.get("PackageId")
-            package_key_value = package.get("Key") or ""
+            package_id = (
+                package.get("Id")
+                or package.get("id")
+                or package.get("Title")
+                or package.get("title")
+                or package.get("PackageId")
+                or package.get("packageId")
+            )
+            package_key_value = package.get("Key") or package.get("key") or ""
             if package_id == package_key or str(package_key_value).startswith(f"{package_key}:"):
-                versions.append(package.get("Version"))
+                versions.append(package.get("Version") or package.get("version"))
 
     return versions, result
 
@@ -373,7 +555,13 @@ def detect_selector_issue(text):
         "timeout",
         "could not find ui element",
         "failed to find element",
-        "element no longer valid"
+        "element no longer valid",
+        "check state",
+        "ncheckstate",
+        "did not appear before clicking",
+        "navigation did not appear",
+        "navigation missing",
+        "admin navigation missing",
     ]
 
     return any(keyword in lower for keyword in selector_keywords)
@@ -489,12 +677,19 @@ def start_orchestrator_job(queue_item):
 def create_repair_prompt(queue_item, job_result):
     workflow_key = queue_item.get("workflow_key")
     application_id = queue_item.get("application_id")
+    application_name = queue_item.get("application_name") or application_id
     operation = queue_item.get("operation")
+    base_url = queue_item.get("base_url")
 
     registry = read_json(REGISTRY_PATH)
     workflow_path = registry.get(workflow_key, {}).get("workflow_path")
+    object_references = workflow_object_references(workflow_path)
+    object_repository_files = object_repository_files_for_references(object_references)
 
     error_text = job_error_text(job_result)
+    object_repository_section = "\n".join(
+        f"- {path}" for path in object_repository_files
+    ) or "- No matching Object Repository files were found for the workflow references."
 
     prompt = f"""
 You are Agent 8: UiPath Selector Repair Agent.
@@ -513,6 +708,18 @@ Operation:
 Workflow path:
 {workflow_path}
 
+Source files:
+- queues/pending_queue_item.json
+- app_profiles/{application_id}.json
+- app_profiles/{application_id}_ui_map.json
+- {workflow_path}
+
+Object Repository files currently referenced by this workflow:
+{object_repository_section}
+
+Base URL:
+{base_url}
+
 Error output:
 {error_text}
 
@@ -520,13 +727,45 @@ Your task:
 1. Inspect the failed workflow XAML.
 2. Inspect app_profiles/{application_id}.json.
 3. Inspect app_profiles/{application_id}_ui_map.json.
-4. Fix selector, UIAutomation, timeout, or synchronization issues.
-5. Use Modern UiPath UIAutomation activities.
-6. Keep values dynamic; do not hardcode runtime request values.
-7. Add Check App State / Wait for Element Appear where needed.
-8. Update the workflow file.
-9. Update README.md with repair notes.
-10. Do not create placeholder-only workflows.
+4. Identify the failed step from the Orchestrator error and workflow stack trace.
+5. Fix selector, UIAutomation, timeout, or synchronization issues.
+6. Use Modern UiPath UIAutomation activities.
+7. Keep values dynamic; do not hardcode runtime request values.
+8. Add Check App State / Wait for Element Appear where needed.
+9. Update the workflow file.
+10. Update the Object Repository files listed above for every repaired target whose workflow XAML keeps an Object Repository `Reference`.
+11. Update README.md with repair notes.
+12. Do not create placeholder-only workflows.
+
+Fast repair scope:
+- Do not perform a broad repository rewrite. Focus on the failed activity from the stack trace plus the immediately dependent targets needed to reach and validate that screen.
+- Use the source files above as the starting set. Search elsewhere only when the failed workflow references another local file.
+- Prefer patching the captured target for the failing OR element over recreating unrelated screens or elements.
+
+Live UI target capture requirements:
+- Match Agent 2's selector standard: use strict {application_name} selectors captured from the live browser/UI screen during repair.
+- Do not read selectors from `app_profiles/*.json` or `app_profiles/*_ui_map.json`; profiles only define operations, fields, steps, and success text.
+- Get repaired selectors from the browser/UI screen itself using UiPath UI Automation capture.
+- Start with a UIA window baseline, then capture the failed interaction target and any dependent targets screen by screen.
+- Use `uip rpa uia` / target configuration output as the source of truth for `NApplicationCard`, `NClick`, `NTypeInto`, `NGetText`, and related targets.
+- Treat `uip rpa uia snapshot inspect` plus `uip rpa uia interact get-all <ref>` output from the live browser/UI as valid live capture evidence when it reports element attributes such as `id`, `tag`, `title`, `url`, and `app`.
+- If `uip rpa uia snapshot capture` fails with a transient Studio named-pipe error such as `connect EPERM \\\\.\\pipe\\UiPathStudio_*`, do not infer selectors from the error output. Retry with `--log-level debug`; if it still fails, use `snapshot inspect` to identify the live browser tab and `interact get-all` on the relevant element refs before deciding live capture is blocked.
+- A "closest selector matches" list in the runtime failure is diagnostic only. It can point to candidates to verify, but it is not selector evidence unless the same selector is confirmed through live UIA capture/inspection.
+- Do not hand-write, guess, or persist selectors in the app profile.
+- Store selector evidence only in the generated UiPath workflow/Object Repository artifacts and optional workflow README notes.
+- If the browser is not already on the required screen, open the application from `in_BaseUrl` / queue base_url and navigate through the operation steps before capturing.
+- If live capture cannot be completed, stop with a clear blocker instead of guessing selectors.
+
+Object Repository repair requirements:
+- If you change a `TargetAnchorable` or `TargetApp` in the XAML and it has a `Reference`, update the matching `.objects/**/ObjectRepositoryTargetData/.content` or `.objects/**/ObjectRepositoryScreenData/.content` file with the same captured selector, target metadata, and screenshot reference.
+- Preserve existing Object Repository references when possible. If capture creates a replacement reference, update the workflow XAML, the matching `.metadata`, and any affected OR screen/element content so the project does not contain stale referenced targets.
+- Do not leave a selector fixed only in XAML while the referenced Object Repository target still contains the old selector.
+- Before finishing, verify that each changed XAML `Reference` value has a corresponding `.objects` metadata/content entry and that the selector in the OR content matches the selector in the workflow target.
+
+Validation requirements before finishing repair:
+- Run `uip rpa get-errors --file-path "{workflow_path}" --project-dir "uipath_project" --output json` and fix every diagnostic.
+- Run `uip rpa build "uipath_project" --output json` and fix build failures before packaging or approval.
+- Treat `get-errors` success alone as insufficient because build catches invalid activity members and enum values.
 
 After repairing, the project will check the current Orchestrator package/process version,
 package the next patch version, deploy it, and run again.
@@ -570,9 +809,38 @@ def package_project(package_key=None):
     ]
     if package_key:
         command.extend(["--package-id", package_key])
-    command.extend(["--package-version", get_project_version()])
+    command.extend([
+        "--package-version",
+        get_project_version(),
+        "--include-sources",
+    ])
 
-    return run_command(command)
+    result = run_command(command)
+    result["package_path"] = None
+    result["source_verification"] = None
+
+    if result.get("returncode") != 0:
+        return result
+
+    result_json = parse_command_json(result)
+    packages = ((result_json or {}).get("Data") or {}).get("Packages") or []
+    package_path = Path(packages[0]) if packages else expected_package_path(package_key)
+    result["package_path"] = str(package_path)
+
+    verification = verify_package_contains_project_sources(package_path)
+    result["source_verification"] = verification
+    if not verification["ok"]:
+        result["returncode"] = 1
+        result["stderr"] = "\n".join(
+            part for part in [
+                result.get("stderr", "").rstrip(),
+                "Package source verification failed:",
+                *[f"- missing {entry}" for entry in verification["missing_entries"]],
+            ]
+            if part
+        )
+
+    return result
 
 
 def get_project_version():
@@ -589,24 +857,72 @@ def set_project_version(version):
     return previous_version, version
 
 
+def expected_package_path(package_key=None):
+    package_key = package_key or os.environ.get("PROMPT2PROVISION_PACKAGE_KEY", DEFAULT_PACKAGE_KEY)
+    return PACKAGE_OUTPUT_DIR / f"{package_key}.{get_project_version()}.nupkg"
+
+
+def verify_package_contains_project_sources(package_path):
+    package_path = Path(package_path)
+    if not package_path.exists():
+        return {
+            "ok": False,
+            "package_path": str(package_path),
+            "missing_entries": [str(package_path)],
+        }
+
+    expected_entries = [
+        "content/" + str(path.relative_to(PROJECT_PATH)).replace("\\", "/")
+        for path in PROJECT_PATH.rglob("*.xaml")
+        if path.is_file()
+    ]
+
+    with zipfile.ZipFile(package_path) as package:
+        package_entries = set(package.namelist())
+
+    missing_entries = [
+        entry for entry in expected_entries
+        if entry not in package_entries
+    ]
+
+    return {
+        "ok": not missing_entries,
+        "package_path": str(package_path),
+        "expected_entries": expected_entries,
+        "missing_entries": missing_entries,
+    }
+
+
 def prepare_next_orchestrator_version(deployment_target):
     package_key = deployment_target["package_key"]
     process = deployment_target.get("process") or {}
     process_version = process.get("ProcessVersion")
+    local_project_version = get_project_version()
     package_versions, package_lookup_result = list_package_versions(package_key)
     if package_lookup_result.get("returncode") != 0:
-        raise RuntimeError(
-            f"Could not check current Orchestrator package versions for '{package_key}'."
-        )
+        if process_version and is_uip_interceptor_failure(package_lookup_result):
+            package_versions = []
+        else:
+            raise RuntimeError(
+                f"Could not check current Orchestrator package versions for '{package_key}'."
+            )
     orchestrator_version = max_version([process_version, *package_versions])
+    highest_known_version = max_version([
+        local_project_version,
+        process_version,
+        *package_versions,
+    ])
 
-    if orchestrator_version:
-        next_version = next_patch_version(orchestrator_version)
-        source = "orchestrator"
+    if highest_known_version:
+        next_version = next_patch_version(highest_known_version)
+        if highest_known_version == local_project_version:
+            source = "local_project"
+        elif highest_known_version == process_version:
+            source = "orchestrator_process"
+        else:
+            source = "package_feed"
     else:
-        next_version = get_project_version()
-        if parse_version(next_version) is None:
-            next_version = "1.0.0"
+        next_version = "1.0.0"
         source = "local_default"
 
     previous_version, project_version = set_project_version(next_version)
@@ -614,6 +930,8 @@ def prepare_next_orchestrator_version(deployment_target):
         "previous_project_version": previous_version,
         "package_version": project_version,
         "orchestrator_current_version": orchestrator_version,
+        "highest_known_version": highest_known_version,
+        "local_project_version": local_project_version,
         "version_source": source,
         "process_version": process_version,
         "package_feed_versions": package_versions,
@@ -621,25 +939,7 @@ def prepare_next_orchestrator_version(deployment_target):
     }
 
 
-def latest_package_path(package_key=None):
-    package_key = package_key or os.environ.get("PROMPT2PROVISION_PACKAGE_KEY", DEFAULT_PACKAGE_KEY)
-    project_version = get_project_version()
-    expected_package = PACKAGE_OUTPUT_DIR / f"{package_key}.{project_version}.nupkg"
-    if expected_package.exists():
-        return expected_package
-
-    packages = sorted(
-        PACKAGE_OUTPUT_DIR.glob(f"{package_key}.*.nupkg"),
-        key=lambda path: path.stat().st_mtime,
-        reverse=True,
-    )
-    if packages:
-        return packages[0]
-
-    return expected_package
-
-
-def deploy_project(deployment_target=None):
+def deploy_project(deployment_target=None, package_path=None):
     """
     Upload the package to the tenant feed and bind it only in Development.
     under the stable Prompt2Provision process name.
@@ -647,10 +947,32 @@ def deploy_project(deployment_target=None):
 
     deployment_target = deployment_target or resolve_deployment_target()
     package_key = deployment_target["package_key"]
-    package_path = latest_package_path(package_key)
+    package_path = Path(package_path) if package_path else expected_package_path(package_key)
     process_name = deployment_target["process_name"]
     package_version = get_project_version()
     folder_path = target_folder_path()
+
+    expected_package = expected_package_path(package_key)
+    if package_path.resolve() != expected_package.resolve():
+        return {
+            "returncode": 1,
+            "package_path": str(package_path),
+            "folder": folder_path,
+            "process_name": process_name,
+            "package_key": package_key,
+            "package_version": package_version,
+            "upload_status": "not_attempted",
+            "upload_result": {
+                "returncode": 1,
+                "stdout": "",
+                "stderr": (
+                    f"Refusing to deploy {package_path}; expected freshly packed "
+                    f"artifact {expected_package}."
+                ),
+            },
+            "process_lookup_result": deployment_target.get("process_lookup"),
+            "process_result": None,
+        }
 
     upload_result = run_command([
         "uip",
@@ -766,10 +1088,19 @@ def main():
         create_repair_prompt(queue_item, job_result)
         run_codex_repair()
 
+        object_repository_issues = validate_object_repository_consistency(
+            registry_workflow_path(queue_item.get("workflow_key"))
+        )
+        if object_repository_issues:
+            raise RuntimeError(
+                "Object Repository consistency check failed after repair:\n"
+                + "\n".join(f"- {issue}" for issue in object_repository_issues)
+            )
+
         deployment_target = resolve_deployment_target()
         version_info = prepare_next_orchestrator_version(deployment_target)
         package_result = package_project(deployment_target["package_key"])
-        deploy_result = deploy_project(deployment_target)
+        deploy_result = deploy_project(deployment_target, package_result.get("package_path"))
         if package_result["returncode"] != 0 or deploy_result["returncode"] != 0:
             repair_entry = {
                 "attempt": attempt,

@@ -1,2 +1,9 @@
 {
+  "broadriver.delete_user": {
+    "status": "approved",
+    "version": "1.0.0",
+    "application_id": "broadriver",
+    "operation": "delete_user",
+    "workflow_path": "uipath_project/workflows/apps/broadriver/DeleteUser.xaml"
+  }
 }

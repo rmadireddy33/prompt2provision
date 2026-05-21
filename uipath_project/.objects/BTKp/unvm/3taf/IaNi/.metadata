@@ -1,0 +1,14 @@
+﻿{
+  "Name": "Delete User Button",
+  "Type": "Element",
+  "TaxonomyType": "Button",
+  "Id": "IaNikuxDFEm36a8PtPVsTQ",
+  "Reference": "hE-3mc5q3kSnc1nDJYPVPQ/IaNikuxDFEm36a8PtPVsTQ",
+  "ParentRef": "hE-3mc5q3kSnc1nDJYPVPQ/3taf9CyHLkOidvDLIasL3g",
+  "Created": "2026-05-19T03:50:30.6770063Z",
+  "Updated": "2026-05-21T03:58:00.0000000Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.4.1.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=25.12.1.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

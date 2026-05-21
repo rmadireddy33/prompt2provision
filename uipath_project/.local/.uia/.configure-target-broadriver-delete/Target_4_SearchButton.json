@@ -1,0 +1,13 @@
+{
+  "ActivityType": "Click",
+  "TargetVersion": "V6",
+  "SelectorStrategy": "Default",
+  "WindowSelector": "<html app='msedge.exe' title='BroadRiver Admin Portal' url='http://localhost:4000/*' />",
+  "WindowNodeId": "b634",
+  "PartialSelector": "<webctrl id='btn-search-delete-user' tag='BUTTON'/>",
+  "ElementNodeId": "e83",
+  "SemanticSelector": null,
+  "Name": "Search Delete User Button",
+  "Description": "Search button on the BroadRiver Delete User form",
+  "ReferenceId": "hE-3mc5q3kSnc1nDJYPVPQ/O2qIVLuTu0Ko_Mmc8ePbNw"
+}

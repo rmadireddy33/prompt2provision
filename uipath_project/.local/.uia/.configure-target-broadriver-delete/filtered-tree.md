@@ -1,0 +1,21 @@
+- ✓ None [ref=e2]
+  - None [ref=e3]
+  - ✓ Container [ref=e4]
+    - ✓ Container [ref=e11]
+      - ✓ Container [ref=e12]
+        - ✓ Container [ref=e14]
+          - Container [ref=e70]
+          - ✓ Container [ref=e71]
+            - ✓ Container [ref=e77]
+              - ✓ Container [ref=e78]
+                - ✓ Container [ref=e82] "Status changes to Deleted"
+              - Container [ref=e79]
+              - ✓ Container [ref=e80]
+                - ✓ Container [ref=e85]
+                  - ✓ Table [ref=e87] "UserId Name EmployeeId Email Department Region UserType RequestedGroup Duration ManagerApproval ManagerEmail Status"
+                    - ✓ None [ref=e89]
+                      - ✓ TableRow [ref=e103]
+                        - ✓ Cell [ref=e115] "Deleted"
+                - ✓ Button [ref=e86] "Mark User Deleted"
+
+16 matches found

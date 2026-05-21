@@ -1,0 +1,13 @@
+{
+  "ActivityType": "Click",
+  "TargetVersion": "V6",
+  "SelectorStrategy": "Default",
+  "WindowSelector": "<html app='msedge.exe' title='BroadRiver Admin Portal' url='http://localhost:4000/*' />",
+  "WindowNodeId": "b634",
+  "PartialSelector": "<webctrl id='btn-delete-user' tag='BUTTON'/>",
+  "ElementNodeId": "e86",
+  "SemanticSelector": null,
+  "Name": "Mark User Deleted Button",
+  "Description": "Button that marks the searched BroadRiver user account as deleted",
+  "ReferenceId": "hE-3mc5q3kSnc1nDJYPVPQ/ufDXXqxxtUmiKrbBvbSiXA"
+}

@@ -6,7 +6,7 @@
   "workflow_key": "broadriver.delete_user",
   "base_url": "http://localhost:4000/",
   "fields": {
-    "email": "noah.wilson@broadriver.com"
+    "email": "tan.cam@test.com"
   },
   "validation": {
     "status": "PASSED",

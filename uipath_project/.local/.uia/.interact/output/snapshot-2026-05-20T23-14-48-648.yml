@@ -1,0 +1,65 @@
+- Window [ref=w11]:
+  - /process: explorer.exe
+  - /class: Shell_TrayWnd
+- Window [ref=w33]:
+  - /process: explorer.exe
+  - /class: Shell_SecondaryTrayWnd
+- Window [ref=w58]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;fd4e89ad-278d-4d15-aea8-e78a1571b006]
+- Window "⠴ Prompt2Provision" [ref=w68]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Prompt2Provision - File Explorer" [ref=w71]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window "Processes - UiPath Orchestrator - Google Chrome" [ref=w72]:
+  - /process: chrome.exe
+  - /class: Chrome_WidgetWin_1
+  - BrowserTab "Processes - UiPath Orchestrator" [ref=b1211] [selected]:
+    - /url: https://cloud.uipath.com/rmadireddy33/rmadireddy33/orchestrator_/processes(sidepanel:sidepanel/processes/421191/requirements)?tid=47187&fid=231056&index=0&size=25&state=M4ewTgLgPgZglgUwDYBMoDsCGBbBUVxgIDGEcI6UmwxAevQCQAMUDAjFAExQDMUALAF1BQA%3D
+- Window "npm install" [ref=w74]:
+  - /process: windowsterminal.exe
+  - /class: CASCADIA_HOSTING_WINDOW_CLASS
+- Window "Prompt2ProvisionUiPath - UiPath Studio Community" [ref=w75]:
+  - /process: uipath.studio.exe
+  - /class: HwndWrapper[UiPath.Studio;;ea536db9-1ba0-4102-bba2-7b1d259deddd]
+- Window "New.png" [ref=w107]:
+  - /process: photos.exe
+  - /class: WinUIDesktopWin32WindowClass
+- Window "UiPath Assistant" [ref=w128]:
+  - /process: uipath.assistant.exe
+  - /class: Chrome_WidgetWin_1
+- Window "Prompt2ProvisionUiPath" [ref=w130]:
+  - /process: uipath.studio.project.exe
+  - /class: HwndWrapper[UiPath.Studio.Project;;0b6ab884-11b2-4db3-a944-aeab6ca28fb1]
+- Window [ref=w131]:
+  - /process: uipath.studio.exe
+  - /class: HwndWrapper[UiPath.Studio;;2cef0be8-dcb6-44eb-a9a5-bb0e77839e7b]
+- Window "Prompt2ProvisionUiPath - UiPath Studio Community" [ref=w132]:
+  - /process: uipath.studio.exe
+  - /class: HwndWrapper[UiPath.Studio;;01cf395e-2672-46d1-85f0-e9f518be608c]
+- Window "PlaceholderWindow" [ref=w145] [minimized]:
+  - /process: uipath.studio.project.exe
+  - /class: HwndWrapper[UiPath.Studio.Project;;87193ead-1dc6-4dbd-b22b-6c55a936c29e]
+- Window "Prompt2ProvisionUiPath" [ref=w146]:
+  - /process: uipath.studio.project.exe
+  - /class: HwndWrapper[UiPath.Studio.Project;;9e09cc27-dda0-4533-af72-74869e7f3c65]
+- Window "2026-05-19 00.24.29 Ravindra's Zoom Meeting - File Explorer" [ref=w148]:
+  - /process: explorer.exe
+  - /class: CabinetWClass
+- Window [ref=w173]:
+  - /process: uipath.uiautomation.exe
+  - /class: HwndWrapper[UiPath.UIAutomation;;fa20215d-c16c-410d-8462-cd2b107e7144]
+- Window "PlaceholderWindow" [ref=w185] [minimized]:
+  - /process: uipath.studio.project.exe
+  - /class: HwndWrapper[UiPath.Studio.Project;;e998aa8a-f8e8-4e6a-ab2b-66c926c3e4c1]
+- Window "C:\Users\ravin\OneDrive\Documents\UiPathCodedAgentChallenge\Prompt2Provision\registry\workflow_registry.json - Notepad++" [ref=w229] [minimized]:
+  - /process: notepad++.exe
+  - /class: Notepad++
+- Window "Microsoft Teams" [ref=w415] [minimized]:
+  - /process: teams.exe
+  - /class: Chrome_WidgetWin_1
+- Window "Program Manager" [ref=w416]:
+  - /process: explorer.exe
+  - /class: Progman
