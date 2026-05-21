@@ -12,6 +12,10 @@ Demo videos are available here:
 https://drive.google.com/drive/folders/1B60PxIdps5i3CE0bhh7WmNC7m4eBTNV4?usp=sharing
 ```
 
+## Architecture Diagram
+
+![Prompt2Provision architecture diagram](docs/images/architecture.png)
+
 ## Solution Details
 
 The solution is designed for disconnected apps where identity lifecycle work must be performed through a UI, exported files, or other non-API surfaces. It has two main parts:
